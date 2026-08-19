@@ -35,56 +35,94 @@ export interface AITool {
 	color?: string;
 }
 
-// Replace the examples below with your own AI tools
 export const aiToolsData: AITool[] = [
 	{
-		id: "example-chat",
-		name: "Example Chat AI",
+		id: "chatgpt",
+		name: "ChatGPT",
 		description: {
-			en: "A conversational AI assistant for writing and reasoning.",
-			zh_CN: "用于写作与推理的对话式 AI 助手。",
+			en: "A general-purpose AI assistant for reasoning, writing, learning, research, and everyday problem solving.",
+			zh_CN: "通用型 AI 助手，主要用于学习、推理、写作、资料整理、编程与日常问题解决。",
 		},
-		icon: "material-symbols:smart-toy",
+		icon: "simple-icons:openai",
 		category: "chat",
 		frequency: "daily",
-		url: "https://example.com",
 		usage: {
-			en: "Daily: writing, brainstorming",
-			zh_CN: "每天：写作、思路梳理",
+			en: "Daily: learning, reasoning, writing, research, programming",
+			zh_CN: "每天：学习、推理、写作、资料整理、编程与项目开发",
 		},
-		tags: ["Chat"],
-		color: "#C97758",
-	},
-	{
-		id: "example-coding",
-		name: "Example Coding AI",
-		description: {
-			en: "An AI-powered code completion and review tool.",
-			zh_CN: "AI 驱动的代码补全与 review 工具。",
-		},
-		icon: "material-symbols:code",
-		category: "coding",
-		frequency: "weekly",
-		url: "https://example.com",
-		usage: {
-			en: "Weekly: code review, refactoring",
-			zh_CN: "每周：代码 review、重构",
-		},
-		tags: ["Coding"],
+		tags: ["LLM", "Reasoning", "Research", "Coding"],
 		color: "#10A37F",
 	},
+
 	{
-		id: "example-image",
-		name: "Example Image AI",
+		id: "claude",
+		name: "Claude",
 		description: {
-			en: "An AI image generation tool for creating illustrations.",
-			zh_CN: "用于生成插图的 AI 图像工具。",
+			en: "An AI assistant focused on reasoning, long-context understanding, writing, and software development.",
+			zh_CN: "注重推理、长上下文理解、写作与软件开发的 AI 助手。",
 		},
-		icon: "material-symbols:image",
-		category: "image",
+		icon: "simple-icons:anthropic",
+		category: "chat",
+		frequency: "weekly",
+		usage: {
+			en: "Weekly: reasoning, writing, coding, long-context tasks",
+			zh_CN: "每周：复杂推理、写作、编程与长上下文任务",
+		},
+		tags: ["LLM", "Reasoning", "Coding"],
+		color: "#D97757",
+	},
+
+	{
+		id: "gemini",
+		name: "Gemini",
+		description: {
+			en: "Google's multimodal AI assistant for research, reasoning, writing, and working with different types of content.",
+			zh_CN: "Google 的多模态 AI 助手，用于资料检索、推理、写作以及多类型内容处理。",
+		},
+		icon: "simple-icons:googlegemini",
+		category: "chat",
+		frequency: "weekly",
+		usage: {
+			en: "Weekly: research, multimodal tasks, comparison",
+			zh_CN: "每周：资料检索、多模态任务与模型对比",
+		},
+		tags: ["LLM", "Multimodal", "Research"],
+		color: "#4285F4",
+	},
+
+	{
+		id: "deepseek",
+		name: "DeepSeek",
+		description: {
+			en: "An AI assistant used for reasoning, mathematics, programming, and technical problem solving.",
+			zh_CN: "用于推理、数学、编程以及技术问题分析的 AI 助手。",
+		},
+		icon: "simple-icons:deepseek",
+		category: "chat",
+		frequency: "weekly",
+		usage: {
+			en: "Weekly: mathematics, reasoning, programming",
+			zh_CN: "每周：数学、逻辑推理、编程与技术问题",
+		},
+		tags: ["LLM", "Reasoning", "Coding", "Math"],
+		color: "#4D6BFE",
+	},
+
+	{
+		id: "github-copilot",
+		name: "GitHub Copilot",
+		description: {
+			en: "An AI coding assistant integrated into development environments for code completion and software development.",
+			zh_CN: "集成于开发环境中的 AI 编程助手，用于代码补全、理解与软件开发。",
+		},
+		icon: "simple-icons:githubcopilot",
+		category: "coding",
 		frequency: "occasional",
-		url: "https://example.com",
-		tags: ["Image"],
-		color: "#1A73E8",
+		usage: {
+			en: "Occasionally: code completion and development assistance",
+			zh_CN: "偶尔：代码补全与开发辅助",
+		},
+		tags: ["Coding", "IDE", "Developer Tool"],
+		color: "#24292F",
 	},
 ];

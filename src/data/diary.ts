@@ -11,14 +11,14 @@ export interface DiaryItem {
 	tags?: string[];
 }
 
-// 示例日记数据
+// 日记数据
 const diaryData: DiaryItem[] = [
 	{
 		id: 1,
-		content:
-			"The falling speed of cherry blossoms is five centimeters per second!",
-		date: "2025-01-15T10:30:00Z",
-		images: ["/images/diary/sakura.jpg", "/images/diary/1.webp"],
+		content: "博客正在慢慢完善中。",
+		date: "2026-08-19T12:00:00+08:00",
+		mood: "开心",
+		tags: ["博客", "日常"],
 	},
 ];
 
@@ -38,6 +38,7 @@ export const getDiaryList = (limit?: number) => {
 // 获取所有标签
 export const getAllTags = () => {
 	const tags = new Set<string>();
+
 	for (const item of diaryData) {
 		if (item.tags) {
 			for (const tag of item.tags) {
@@ -45,5 +46,6 @@ export const getAllTags = () => {
 			}
 		}
 	}
+
 	return Array.from(tags).sort();
 };

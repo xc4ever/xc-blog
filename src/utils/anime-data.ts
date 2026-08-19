@@ -82,7 +82,7 @@ export function getAnimeSourceConfigs(): Record<string, AnimeSourceConfig> {
 		bilibili: {
 			type: "json",
 			filename: "bilibili-data.json",
-			fetchOnDev: undefined,
+			fetchOnDev: true,
 			emptyDescription: i18n(I18nKey.animeEmptyBilibili),
 		},
 		bangumi: {
