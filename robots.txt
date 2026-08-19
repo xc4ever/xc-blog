@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /
+Allow: /$
+Allow: /posts/
+
+Sitemap: https://xc4ever.cn/sitemap-index.xml
