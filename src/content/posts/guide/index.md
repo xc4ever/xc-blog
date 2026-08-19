@@ -1,62 +1,136 @@
 ---
-title: "Writing a Blog Post"
-published: 2024-04-01
-description: "A generic example of article structure and frontmatter."
+title: "如何在 Mizuki 中撰写博客文章"
+published: 2026-08-19
+description: "这是一篇用于介绍 Mizuki 博客文章结构与 Frontmatter 写法的示例文章。"
 image: "./cover.webp"
-tags: ["Example", "Writing", "Markdown"]
-category: Guides
+tags: ["Mizuki", "博客", "Markdown"]
+category: 教程
 draft: false
 ---
 
+欢迎来到 **XC's Blog**！
 
+这篇文章主要用于介绍 Mizuki 中博客文章的基本结构，以及常用的 Frontmatter 配置。
 
-This blog template is built with [Astro](https://astro.build/). This article is a small, generic example of the file structure and common frontmatter used by a post. The complete current schema and Markdown syntax are maintained in the [Content Authoring Guide](../../../../docs/CONTENT_AUTHORING.md).
+以后在 `src/content/posts/` 中创建 Markdown 或 MDX 文件，就可以用这种方式来撰写博客文章。
 
-## Common frontmatter
+## Frontmatter
+
+每篇文章开头都需要使用 Frontmatter 来描述文章的基本信息。
+
+一个常见的写法如下：
 
 ```yaml
 ---
-title: "An Example Article"
-published: 2026-08-01
-updated: 2026-08-08
-description: "A short summary for previews."
-image: ./cover.webp
-tags: [Example, Guide]
-category: Guides
+title: "一篇示例文章"
+published: 2026-08-19
+updated: 2026-08-19
+description: "这是文章的简短介绍。"
+image: "./cover.webp"
+tags: ["示例", "教程"]
+category: 教程
 draft: false
-comment: true
 ---
 ```
 
+### 常用字段
 
+| 字段 | 说明 |
+| --- | --- |
+| `title` | 文章标题 |
+| `published` | 文章发布日期 |
+| `updated` | 文章最后修改日期 |
+| `pinned` | 是否将文章置顶 |
+| `priority` | 置顶文章的优先级，数字越小优先级越高 |
+| `description` | 文章简介，会显示在文章列表等位置 |
+| `image` | 文章封面图片 |
+| `tags` | 文章标签 |
+| `category` | 文章分类 |
+| `licenseName` | 本篇文章使用的许可证 |
+| `author` | 文章作者 |
+| `sourceLink` | 文章内容的来源或参考链接 |
+| `draft` | 是否为草稿，设置为 `true` 时不会正常显示 |
 
+## 文章应该放在哪里？
 
-| Attribute     | Description                                                                                                                                                                                                 |
-|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `title`       | The title of the post.                                                                                                                                                                                      |
-| `published`   | The date the post was published.                                                                                                                                                                            |
-| `pinned`      | Whether this post is pinned to the top of the post list.                                                                                                                                                   |
-| `priority`    | The priority of the pinned post. Smaller value means higher priority (0, 1, 2...).                                                                                                                          |
-| `description` | A short description of the post. Displayed on index page.                                                                                                                                                   |
-| `image`       | The cover image path of the post.<br/>1. Start with `http://` or `https://`: Use web image<br/>2. Start with `/`: For image in `public` dir<br/>3. With none of the prefixes: Relative to the markdown file |
-| `tags`        | The tags of the post.                                                                                                                                                                                       |
-| `category`    | The category of the post.                                                                                                                                                                                   |
-| `licenseName` | The license name for the post content.                                                                                                                                                                      |
-| `author`      | The author of the post.                                                                                                                                                                                     |
-| `sourceLink`  | The source link or reference for the post content.                                                                                                                                                          |
-| `draft`       | If this post is still a draft, which won't be displayed.                                                                                                                                                    |
+博客文章应该放在：
 
-## Where to Place the Post Files
-
-
-
-Place post files in `src/content/posts/`. You can create sub-directories to organize articles and their local assets.
-
+```text
+src/content/posts/
 ```
+
+例如：
+
+```text
 src/content/posts/
 ├── example.md
 └── guides/
     ├── cover.webp
     └── index.md
 ```
-Relative images such as `./cover.webp` are resolved from the current article file.
+
+你也可以为一篇文章单独创建一个文件夹，并把文章封面等资源放在里面。
+
+例如：
+
+```text
+src/content/posts/my-first-post/
+├── cover.webp
+└── index.md
+```
+
+这时在文章中使用：
+
+```yaml
+image: "./cover.webp"
+```
+
+就可以引用同一个文件夹中的 `cover.webp`。
+
+## 图片的使用
+
+Mizuki 支持多种图片路径写法。
+
+### 使用文章目录中的图片
+
+```yaml
+image: "./cover.webp"
+```
+
+### 使用 `public` 目录中的图片
+
+```yaml
+image: "/images/cover.webp"
+```
+
+### 使用网络图片
+
+```yaml
+image: "https://example.com/cover.webp"
+```
+
+对于自己的博客，通常更推荐使用本地图片，这样以后迁移博客或更换部署平台时会更加方便。
+
+## 草稿
+
+如果文章还没有准备好发布，可以将：
+
+```yaml
+draft: true
+```
+
+设置为草稿状态。
+
+完成文章后，再修改为：
+
+```yaml
+draft: false
+```
+
+这样就可以正式发布。
+
+## 关于这篇文章
+
+这篇文章本身只是一个简单的写作参考。
+
+以后，这里会真正记录 XC 的学习、技术、生活以及各种折腾的过程。

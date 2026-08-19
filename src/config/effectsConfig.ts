@@ -1,7 +1,7 @@
 import type { SakuraConfig } from "../types/config";
 
 export const sakuraConfig: SakuraConfig = {
-	enable: false,
+	enable: true, // 是否启用樱花特效
 	switchable: true,
 	sakuraNum: 21,
 	limitTimes: -1,

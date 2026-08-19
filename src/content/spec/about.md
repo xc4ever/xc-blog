@@ -1,49 +1,84 @@
+# 关于我
 
-This website is built with the **Astro** framework using the [Mizuki](https://github.com/LyraVoid/Mizuki) theme.
+你好，我是 **XC**。
 
-::github{repo="LyraVoid/Mizuki"}
+这里是我的个人博客，欢迎来到 **XC's Blog**。
 
-## 🌟 Theme Features
+我会在这里记录自己的学习、思考、生活，以及一些平时折腾的东西。
 
-### 🎨 Design & User Experience
-- **Modern & Elegant Design** - Clean, minimalist interface with beautiful typography
-- **Fully Responsive** - Optimized for all devices from mobile to desktop
-- **Dark/Light Mode** - Automatic theme switching with smooth transitions
-- **Beautiful Typography** - Enhanced readability with JetBrains Mono font
-- **Smooth Animations** - Fluid page transitions and interactive elements
+## 关于我
 
-### 🔍 Content & Search
-- **Advanced Search** - Powered by [Pagefind](https://pagefind.app/) for fast, accurate results
-- **Enhanced Markdown** - Extended syntax with code highlighting and math support
-- **Interactive Table of Contents** - Auto-scroll navigation for long articles
-- **RSS Feed Generation** - Stay updated with automatic feed generation
-- **Reading Time Estimation** - Know how long articles take to read
-- **Post Categorization** - Organize content with tags and categories
+目前是一名电气工程专业的学生。
 
+主要关注：
 
+- 电力系统
+- 新能源电力系统
+- 发电
+- 电力电子与相关技术
+- 人工智能与能源领域的交叉应用
 
-### 📱 Special Pages
-- **Anime Tracking Page** - Track your anime watching progress with ratings
-- **Friends Links Page** - Showcase friend websites with beautiful cards
-- **Diary/Moments Page** - Share life moments like social media posts
-- **Archive Page** - Organized timeline view of all posts
-- **About Page** - Customizable personal introduction (this page!)
+平时也会写一些代码，折腾各种软件和硬件。
 
-### 🛠 Technical Features
-- **Enhanced Code Blocks** - Powered by [Expressive Code](https://expressive-code.com/)
-- **Math Support** - LaTeX rendering with KaTeX for mathematical expressions
-- **Image Optimization** - PhotoSwipe gallery with lazy loading
-- **SEO Optimized** - Built-in sitemap and meta tags for better search visibility
-- **Performance Optimized** - Fast loading with caching and optimization
-- **Comment System Ready** - Integration support for Twikoo comments
+相比于单纯记录结论，我更喜欢把自己**从不会到会、从发现问题到解决问题**的过程记录下来。
 
-### 🎯 Advanced Markdown Features
-- **Callouts & Admonitions** - Beautiful info boxes with `> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`
-- **Mathematical Equations** - Write LaTeX math with `$inline$` and `$$block$$` syntax
-- **GitHub Cards** - Embed repository cards with `::github{repo="user/repo"}`
-- **Syntax Highlighting** - Advanced code highlighting with line numbers
-- **Copy Code Buttons** - Easy code copying functionality
+所以这里的文章可能并不总是非常正式，但希望能够尽可能保留真实的思考过程。
+
+## 技术栈
+
+平时接触比较多的东西包括：
+
+```text
+Python
+MATLAB
+JavaScript / TypeScript
+Astro
+Git
+```
+
+当然，技术栈还在不断扩展。
+
+目前这个博客本身也是我学习 Astro、Git 以及 Web 开发的一部分。
+
+## 兴趣
+
+除了专业学习之外，我也喜欢：
+
+- 🎵 音乐
+- 🎮 音游
+- 🎮 Galgame
+- 🌐 折腾互联网与各种软件
+- 💻 编程
+- 🌱 学习一些有意思的新东西
+
+有时候也会突然开始折腾一个完全没接触过的东西。
+
+于是这里也就成了这些折腾过程的记录。
+
+## 为什么建立这个博客？
+
+以前很多东西都是：
+
+> 查到 → 看懂 → 用完 → 忘掉。
+
+后来发现，如果把解决问题的过程真正记录下来，过一段时间再回来看，往往还能发现很多新的东西。
+
+所以我想建立一个属于自己的地方，把这些东西慢慢积累下来。
+
+这里不一定会一直保持高频更新，也不一定每篇文章都非常严肃。
+
+但希望它能够一直保留下来。
 
 ---
 
-*Built with ❤️ using Astro and inspired by modern web design principles.*
+## 最后
+
+感谢你来到这里。
+
+如果你恰好对这里的某篇文章感兴趣，希望它能够对你有所帮助。
+
+也欢迎通过其他页面找到我。
+
+**那么，就从这里开始吧。**
+
+> 世界的意义必定存在于世界之外
