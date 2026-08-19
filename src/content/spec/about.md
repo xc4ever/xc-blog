@@ -1,3 +1,5 @@
+::github{repo="xc4ever/xc-blog"}
+
 # 关于我
 
 你好，我是 **XC**。
