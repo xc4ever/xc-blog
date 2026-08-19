@@ -2,8 +2,8 @@
 ---
 title: "我是如何用 Astro + Mizuki 搭建自己的博客的"
 published: 2026-08-19
-description: "记录我从选择 Astro 到使用 Mizuki 搭建个人博客的过程，以及中文化、主题配置、内容管理和后续部署规划。"
-tags: [Astro, Mizuki, Blog, Git]
+description: "记录我从选择 Astro 和 Mizuki，到完成博客中文化、配置、内容整理、Git 管理以及最终构建的整个过程。"
+tags: [Astro, Mizuki, Blog, Git, Web]
 category: 建站
 draft: false
 ---
@@ -12,131 +12,182 @@ draft: false
 
 一直想拥有一个真正属于自己的个人博客。
 
-相比直接使用现成的博客平台，自己搭建网站虽然需要花一些时间，但可以完全控制网站的样式、功能和内容。同时，这个过程本身也可以成为一个学习项目。
+相比直接使用现成的博客平台，自己搭建网站虽然麻烦一些，但也意味着可以真正控制网站的样式、内容和代码。
 
-所以我决定自己搭一个博客。
+更重要的是，搭建博客本身就是一个学习 Web 开发的过程。
 
-这篇文章记录的不是一篇 Astro 官方教程，而是我自己搭建这个博客的过程：为什么最后选择 Astro，为什么选择 Mizuki，以及我是如何从一个主题模板，一点一点把它改成自己的博客的。
+所以最后我选择了：
+
+```text
+Astro
++
+Mizuki
++
+Git
+````
+
+从一个现成的 Astro 博客主题开始，一点一点把它改成现在的 **XC's Blog**。
+
+这篇文章记录的不是 Astro 官方教程，而是我自己实际搭建这个博客时做过的事情，以及过程中遇到的一些问题。
 
 ---
 
 ## 一、为什么想做一个自己的博客
 
-以前接触到的很多内容，往往分散在不同的平台上。
+以前接触到的很多东西，总是分散在不同的地方。
 
-学习笔记可能放在本地，项目记录可能放在 GitHub，生活中的一些东西又可能发在其他平台。
+学习笔记可能放在本地，项目代码放在 GitHub，生活中的一些记录又可能在其他平台。
 
-我一直觉得，如果有一个属于自己的地方，把这些东西慢慢记录下来，会是一件挺有意思的事情。
+所以我一直觉得，如果能有一个真正属于自己的地方，把这些东西慢慢记录下来，应该是一件挺有意思的事情。
 
-这个博客不一定需要每天更新，也不一定需要写非常正式的文章。
+这个博客也不一定需要每天更新。
 
 它更像是一个长期维护的个人空间。
 
-以后可以在这里记录：
+以后我可能会在这里记录：
 
-- 学习过程
-- 电气工程
-- 电力系统
-- 新能源
-- 编程
-- AI
-- 项目开发
-- 音乐
-- 音游
-- Galgame
-- 数码设备
-- 以及一些生活中的事情
+* 电气工程
+* 电力系统
+* 新能源
+* 编程
+* AI
+* 项目开发
+* 音乐
+* 音游
+* Galgame
+* 数码设备
+* 学习过程
+* 以及一些生活中的事情
 
-所以我希望这个网站不仅仅是一个“博客模板”，而是一个以后可以不断折腾和完善的小项目。
+所以我希望它最终不只是一个“博客模板”，而是一个会随着我不断学习而一起变化的小项目。
 
 ---
 
 ## 二、为什么选择 Astro
 
-在真正开始搭建之前，我考虑过几种不同的方案。
+在开始之前，我考虑过一些比较常见的博客方案，例如 WordPress、Hexo 和 Astro。
 
-比较常见的方案包括 WordPress、Hexo 和 Astro。
+最后选择了 Astro。
 
-最后我选择了 Astro。
+### 1. Markdown 很适合写博客
 
-### 1. 比较适合内容型网站
-
-博客最核心的内容其实就是文章。
+博客最重要的东西其实就是文章。
 
 而 Astro 对 Markdown 和 MDX 的支持非常适合这种场景。
 
-一篇文章基本就是一个 Markdown 文件，例如：
+一篇文章本质上就是一个 Markdown 文件，例如：
 
 ```text
 src/content/posts/my-blog/build-this-blog.md
-````
+```
 
-文章内容、标题、发布时间、标签等信息都可以直接写在 Markdown 文件中。
+文章标题、发布时间、分类、标签等信息都可以写在 Frontmatter 中：
 
-这样写博客的时候不需要维护一个复杂的后台系统。
+```yaml
+---
+title: "文章标题"
+published: 2026-08-19
+description: "文章简介"
+tags: [Astro, Blog]
+category: 建站
+---
+```
 
-### 2. 静态网站很适合个人博客
+写文章的时候不需要维护一个复杂的后台系统。
 
-个人博客并不需要非常复杂的后端。
+直接编辑 Markdown，然后构建网站即可。
 
-文章发布以后，网站的大部分内容都是相对固定的。
+### 2. 静态网站非常适合个人博客
 
-Astro 可以在构建的时候生成静态页面，因此部署之后不需要一直运行一个复杂的后端服务。
+个人博客通常并不需要一个非常复杂的后端。
+
+文章发布以后，大部分内容都是相对固定的。
+
+Astro 可以在构建阶段生成网页，因此部署之后不需要一直运行一个复杂的服务器。
 
 对于个人博客来说，这种方式非常合适。
 
-### 3. 可以自己折腾
+### 3. 可以深入代码
 
-我比较喜欢 Astro 的一点，是它不会把所有东西都封装得特别死。
+我比较喜欢 Astro 的另一个原因，是它不会把所有东西都封装起来。
 
-如果以后想修改页面，可以继续深入组件、配置和项目结构。
+如果以后想修改某个页面，可以继续往下研究：
 
-这也意味着：
+```text
+components
+pages
+layouts
+config
+content
+utils
+```
 
-> 这个博客不仅是一个网站，也是一个可以拿来学习 Web 开发的项目。
+这些代码最终都会暴露在项目中。
 
-所以相比直接注册一个现成的博客平台，我更希望从代码、Git、部署一直做到域名，把整个过程自己走一遍。
+所以这个博客对我来说并不只是一个网站。
+
+它本身也是一个 Web 开发学习项目。
 
 ---
 
 ## 三、为什么选择 Mizuki
 
-决定使用 Astro 之后，我没有选择从零开始设计博客页面，而是找了一个已经比较完整的 Astro 博客主题。
+决定使用 Astro 之后，我没有选择从零开始设计整个博客。
 
-最后选择了 Mizuki。
-
-Mizuki 已经提供了很多个人博客常用的功能，例如：
+如果所有东西都自己实现，需要花大量时间处理：
 
 * 首页
-* 文章系统
-* 标签
+* 文章列表
 * 分类
+* 标签
 * 归档
 * 侧边栏
-* 个人资料
-* 友情链接
+* TOC
+* 评论
 * 音乐播放器
-* About 页面
-* Markdown 扩展
-* 代码高亮
-* 数学公式
-* 评论系统支持
+* Markdown
+* 搜索
+* 响应式布局
+* 各种页面
 
-如果全部自己实现，需要花很多时间。
+所以最后选择了一个已经比较完整的 Astro 博客主题：
 
-使用现成主题以后，就可以把主要精力放在内容和个性化修改上。
+**Mizuki**。
 
-不过使用主题也有一个问题。
+Mizuki 已经提供了大量个人博客常用功能。
 
-如果只会运行：
+例如：
+
+```text
+首页
+文章系统
+分类
+标签
+归档
+侧边栏
+个人资料
+友情链接
+音乐播放器
+About
+Markdown 扩展
+代码高亮
+数学公式
+搜索
+```
+
+这样就不用从零开始实现整个网站。
+
+但使用现成主题也有一个问题：
+
+如果只知道：
 
 ```powershell
 pnpm dev
 ```
 
-而不知道主题内部是怎么组织的，那么以后想改东西还是会比较麻烦。
+而不知道主题内部是怎么工作的，那么以后想修改东西还是会比较麻烦。
 
-所以拿到 Mizuki 之后，我首先做的事情不是马上改页面，而是先把它的项目结构和配置文件大致摸清楚。
+因此拿到 Mizuki 之后，我没有马上开始疯狂改页面，而是先把它的项目结构和配置体系摸了一遍。
 
 ---
 
@@ -144,77 +195,56 @@ pnpm dev
 
 我的开发环境是 Windows。
 
-主要使用：
+目前主要使用：
 
-* Node.js
-* pnpm
-* Git
-* VS Code
+```text
+Windows
+Node.js
+pnpm
+Git
+VS Code
+PowerShell
+```
 
-项目最终放在：
+项目放在：
 
 ```text
 D:\Projects\Mizuki
 ```
 
-### 1. 获取 Mizuki
-
-首先使用 Git 获取 Mizuki 项目。
-
-拿到项目以后进入项目目录：
+进入项目目录：
 
 ```powershell
 cd D:\Projects\Mizuki
 ```
 
-这样以后所有操作都在这个目录下进行。
-
-### 2. 安装依赖
-
-进入项目目录以后安装项目依赖：
+然后安装依赖：
 
 ```powershell
 pnpm install
 ```
 
-第一次安装会下载项目需要的各种依赖。
-
-### 3. 启动开发服务器
-
-依赖安装完成以后：
+启动开发服务器：
 
 ```powershell
 pnpm dev
 ```
 
-Astro 启动成功以后会出现类似：
+之后就可以在浏览器中访问本地开发地址。
 
-```text
-astro v7.1.3 ready
-Local http://localhost:3000/
-```
+到这里，一个能够正常运行的 Mizuki 博客就已经出现了。
 
-然后直接在浏览器打开：
+但这还只是主题作者的博客。
 
-```text
-http://localhost:3000/
-```
-
-就可以看到博客。
-
-到这里，一个可以正常运行的 Mizuki 博客就已经搭起来了。
-
-不过此时看到的还是主题作者准备好的模板。
-
-接下来才是真正的个性化过程。
+真正有意思的部分，是接下来开始把它改成自己的。
 
 ---
 
-## 五、认识 Mizuki 的项目结构
+## 五、先认识 Mizuki 的项目结构
 
-刚开始拿到项目时，我没有直接修改文件，而是先看看里面有哪些东西。
+刚开始拿到项目的时候，我首先检查了 `src` 目录。
 
-其中比较重要的目录包括：
+其中比较重要的部分包括：
 
 ```text
 src/
@@ -224,42 +254,79 @@ src/
 ├── i18n/
 ├── layouts/
 ├── pages/
-└── styles/
+├── styles/
+└── utils/
 ```
 
-对于一个博客来说，最值得关注的是两个地方：
+对于博客来说，最重要的几个地方是：
+
+```text
+src/config/
+src/content/
+src/pages/
+src/components/
+```
+
+其中：
 
 ```text
 src/config/
 ```
 
-和：
+主要负责网站配置。
+
+而：
 
 ```text
 src/content/
 ```
 
-前者主要负责网站的各种配置。
+负责文章等内容。
 
-后者主要负责博客内容。
+至于：
 
-所以后面的修改基本也是围绕这两个目录展开的。
+```text
+src/pages/
+src/components/
+```
+
+则更多负责页面和组件本身。
+
+把这几个部分搞清楚以后，后面修改网站就容易很多了。
 
 ---
 
-## 六、第一次修改网站：siteConfig
+## 六、把网站改成自己的
 
-首先查看：
+整个博客最先需要修改的就是：
 
 ```text
 src/config/siteConfig.ts
 ```
 
-这是整个网站最重要的配置文件之一。
+这是 Mizuki 最重要的配置文件之一。
 
-这里可以设置网站标题、语言、网址等信息。
+这里可以设置：
 
-我首先把网站语言修改成中文。
+* 网站标题
+* 网站副标题
+* 网站地址
+* 网站语言
+* 网站开始日期
+* 时区
+* 主题色
+* Banner
+* TOC
+* 字体
+* 图片优化
+* 页面开关
+* 其他全局配置
+
+---
+
+## 七、中文化
+
+首先修改网站语言。
 
 最终使用：
 
@@ -267,512 +334,440 @@ src/config/siteConfig.ts
 const SITE_LANG = "zh_CN";
 ```
 
-Mizuki 本身已经提供了中文语言文件：
+Mizuki 本身已经提供中文语言文件，因此并不需要自己重新翻译所有界面。
 
-```text
-src/i18n/languages/
-├── en.ts
-├── ja.ts
-├── zh_CN.ts
-└── zh_TW.ts
-```
+这样网站的大部分系统文字就可以直接使用中文。
 
-同时 `translation.ts` 中也已经注册了中文：
+这是我第一次真正感受到：
 
-```text
-zh_cn: zh_CN
-zh_tw: zh_TW
-ja: ja
-```
+> 一个主题真正好不好用，不只是看页面漂不漂亮，还要看它的配置体系是否完整。
 
-因此使用：
+---
 
-```text
-zh_CN
-```
+## 八、网站名称和域名
 
-就可以正常启用中文。
-
-网站主体也随之完成了基本中文化。
-
-### 网站名称
-
-网站名称最终准备使用：
+网站名称最终改成：
 
 ```text
 XC's Blog
 ```
 
-这也是以后网站逐渐个性化的核心之一。
-
-### siteURL
-
-Mizuki 中还有：
+现在网站使用的地址也已经改成：
 
 ```text
-siteURL
+https://xc4ever.cn/
 ```
 
-目前项目中仍然保留主题模板提供的网址。
+也就是说，现在 `siteConfig.ts` 中已经不是主题作者的示例网址，而是我自己的站点地址。
 
-暂时没有修改。
-
-原因很简单：
-
-现在网站还处于本地开发和修改阶段，还没有正式部署，也还没有确定最终使用的独立域名。
-
-所以现在没有必要提前修改。
-
-等以后真正拥有自己的域名以后，再统一修改。
+这一点和刚开始搭建时最大的区别之一，就是博客已经开始真正脱离 Mizuki 的默认模板。
 
 ---
 
-## 七、修改个人资料
+## 九、Banner、主题和页面风格
 
-接下来查看：
+Mizuki 的 Banner 支持桌面端和移动端分别配置。
+
+目前使用本地图片：
 
 ```text
-src/config/profileConfig.ts
+/assets/desktop-banner/
 ```
 
-这里负责个人资料相关的信息。
+以及：
 
-主题原本使用的是模板作者的信息，包括名字和个人简介。
+```text
+/assets/mobile-banner/
+```
 
-我首先把头像换成了自己的头像。
+同时还保留了 Banner 轮播和波浪效果。
 
-而名称、Bio 等文字则准备等网站整体风格确定以后再统一修改。
+首页文字则通过：
 
-这样做可以避免网站还没确定风格，就反复修改个人资料。
+```text
+homeText
+```
+
+控制。
+
+目前使用的是偏日系的文案，例如：
+
+```text
+わたしの部屋
+```
+
+以及一些日文句子。
+
+我希望这个博客整体不要太像传统意义上的“技术博客”。
+
+它更像一个个人空间：
+
+```text
+技术
++
+学习
++
+兴趣
++
+生活
+```
+
+所以最终视觉风格也会偏向我自己喜欢的方向。
 
 ---
 
-## 八、调整导航栏
+## 十、侧边栏和站点统计
 
-接下来查看：
+Mizuki 的侧边栏并不是一个巨大的页面文件，而是由多个 Widget 组合起来的。
 
-```text
-src/config/navBarConfig.ts
-```
-
-Mizuki 默认已经提供了比较丰富的导航结构。
-
-大致包括：
-
-```text
-Home
-Archive
-
-Links
-├── GitHub
-├── Bilibili
-└── Gitee
-
-My
-├── Anime
-├── Diary
-├── Gallery
-└── Devices
-
-About
-├── About
-└── Friends
-
-Others
-├── Projects
-├── Skills
-├── AI Tools
-└── Timeline
-```
-
-这些页面不一定全部需要保留。
-
-因为这是一个个人博客，并不是为了把主题提供的所有功能都打开。
-
-所以后面会根据实际使用情况逐渐精简。
-
-目前先把结构摸清楚，没有急着全部删除。
-
----
-
-## 九、调整侧边栏
-
-侧边栏主要涉及：
-
-```text
-src/config/sidebarConfig.ts
-```
-
-以及相关的 Sidebar Layout 配置。
-
-目前左侧大致包括：
+例如：
 
 ```text
 Profile
 Announcement
 Tags
 TOC
-```
-
-右侧包括：
-
-```text
 Site Stats
 Calendar
 Categories
 Music
 ```
 
-这里有一个比较容易搞混的地方。
+这些组件由配置决定显示在哪里、以什么顺序显示。
 
-`sidebarConfig` 并不一定决定组件里面具体显示什么内容。
+在实际修改过程中，我还遇到了一个比较有意思的问题：
 
-它更主要负责：
-
-* 哪些组件显示
-* 显示在左边还是右边
-* 显示顺序
-* 布局
-* 响应式行为
-
-至于具体的公告、个人信息、标签等内容，则由各自的配置文件和文章数据决定。
+**站点统计中的总字数。**
 
 ---
 
-## 十、公告
+## 十一、解决站点总字数统计问题
 
-公告配置位于：
+一开始我尝试直接使用：
 
-```text
-src/config/announcementConfig.ts
+```ts
+post.data.words
 ```
 
-主题原本提供的是模板内容。
+于是代码类似：
 
-例如：
-
-```text
-ブログへようこそ！これはサンプルの告知です
+```ts
+const totalWords = posts.reduce(
+    (total, post) => total + (post.data.words ?? 0),
+    0,
+);
 ```
 
-并且带有：
+但是后来检查整个项目之后发现：
 
 ```text
-Learn More
+post.data.words
+```
+
+并不是文章 Collection schema 中定义的字段。
+
+真正的文章字数来自 Markdown 渲染阶段产生的：
+
+```ts
+remarkPluginFrontmatter.words
+```
+
+例如文章页面本身就是通过：
+
+```ts
+const { Content, headings, remarkPluginFrontmatter } =
+    await renderPostContent(...)
+```
+
+然后使用：
+
+```ts
+remarkPluginFrontmatter.words
+```
+
+显示文章字数。
+
+因此，直接从：
+
+```text
+post.data.words
+```
+
+读取并不是一个可靠的方法。
+
+---
+
+## 十二、最后采用的字数统计方式
+
+为了让首页的“总字数”和文章页面的中文统计逻辑尽量保持一致，我最后没有继续强行往 Collection data 里塞一个 `words` 字段。
+
+而是在站点统计组件中直接读取文章正文：
+
+```ts
+post.body
+```
+
+然后进行统计。
+
+首先移除代码块：
+
+````ts
+text = text.replace(/```[\s\S]*?```/g, "");
+````
+
+再移除行内代码：
+
+```ts
+text = text.replace(/`[^`]+`/g, "");
+```
+
+之后使用 CJK 字符正则统计中文、日文、韩文等字符：
+
+```ts
+const cjkPattern =
+    /[\u4e00-\u9fa5\u3040-\u309f\u30a0-\u30ff\uac00-\ud7af\u3000-\u303f\uff00-\uffef]/g;
+```
+
+非 CJK 内容则按照空白进行分词。
+
+这样最终得到的总字数更加符合博客实际显示的统计方式。
+
+这次修改也让我更加清楚了 Astro Content 的数据流：
+
+```text
+Markdown
+    ↓
+Content Collection
+    ↓
+render()
+    ↓
+remarkPluginFrontmatter
+    ↓
+文章页面
+```
+
+而不是所有文章相关的数据都会自动出现在：
+
+```ts
+post.data
+```
+
+里面。
+
+---
+
+## 十三、检查 Content Schema
+
+为了进一步确认文章的数据结构，我又检查了：
+
+```text
+src/content.config.ts
+```
+
+这里定义了：
+
+```ts
+const postsCollection = defineCollection(...)
+```
+
+文章 Frontmatter 中支持的字段包括：
+
+```text
+title
+published
+updated
+draft
+description
+image
+tags
+category
+lang
+pinned
+comment
+priority
+author
+sourceLink
+licenseName
+licenseUrl
+```
+
+此外还存在页面加密相关字段：
+
+```text
+encrypted
+password
+passwordHint
+hideHomeContent
 ```
 
 以及：
 
 ```text
-/about/
+alias
+permalink
 ```
 
-这样的链接。
+等字段。
 
-这些内容后面都会替换成自己的公告。
-
-目前暂时没有急着设计，因为公告内容最好等网站正式确定以后再写。
+这也说明 Mizuki 的文章系统并不是简单地读取几个 Markdown 属性，而是通过 Astro Content Collection 对文章数据进行统一定义和校验。
 
 ---
 
-## 十一、配置网易云音乐播放器
+## 十四、检查文章加载器
 
-Mizuki 自带音乐播放器。
-
-这一点对我来说比较有吸引力，因为我平时比较常使用网易云音乐。
-
-音乐配置主要位于：
+随后又继续检查了：
 
 ```text
-src/config/musicConfig.ts
+src/loaders/post-loader.ts
 ```
 
-目前使用网易云音乐：
+这个文件负责对文章进行额外处理。
+
+其中一个重要作用，是读取 Markdown 文件本身，然后检查：
+
+```text
+published
+updated
+```
+
+是否是只有日期而没有具体时间的 Frontmatter。
+
+最终生成：
+
+```text
+_publishedDateOnly
+_updatedDateOnly
+```
+
+这样的内部字段。
+
+也就是说，Mizuki 在文章加载阶段还做了一层自己的数据处理。
+
+这也是为什么在修改主题时，最好不要只盯着页面组件。
+
+有时候真正的数据来源其实在：
+
+```text
+loader
+→ content collection
+→ renderer
+→ page
+```
+
+这一整条链路上。
+
+---
+
+## 十五、文章渲染流程
+
+之后又检查了：
+
+```text
+src/utils/content-renderer.ts
+```
+
+这里使用：
 
 ```ts
-mode: "local",
-server: "netease",
-type: "playlist",
+render(post)
 ```
 
-通过歌单 ID 加载歌曲。
+把文章内容渲染出来。
 
-### 一个小问题
-
-之前修改歌单 ID 后，发现播放器没有马上按照预期变化。
-
-所以没有继续盲目修改配置，而是直接去检查播放器的实现。
-
-最后确认播放器的 `loadPlaylist()` 会读取：
-
-```text
-musicPlayerConfig.id
-musicPlayerConfig.server
-musicPlayerConfig.type
-musicPlayerConfig.meting_api
-```
-
-也就是说，真正影响播放器加载内容的不只是一个歌单 ID，而是这些配置共同决定的。
-
-确认这一点以后，播放器的问题也就比较容易定位了。
-
-现在播放器已经可以正常使用。
-
-以后还可以继续对播放器进行个性化调整。
-
----
-
-## 十二、Banner 和壁纸
-
-Mizuki 的首页 Banner 也可以进行修改。
-
-目前 Banner 使用：
-
-```text
-/assets/desktop-banner/1.webp
-/assets/desktop-banner/2.webp
-/assets/desktop-banner/3.webp
-/assets/desktop-banner/4.webp
-```
-
-移动端也有对应的 Banner 图片。
-
-除了图片之外，Banner 上面还有：
-
-```text
-homeText
-```
-
-用于显示标题和副标题。
-
-主题默认使用的是比较普通的博客文案。
-
-但我不太想使用这种：
-
-```text
-Welcome to my blog
-```
-
-之类的宣传语。
-
-我更希望这里以后放一些自己真正喜欢的内容。
-
-目前比较倾向于使用一些 Galgame 中印象比较深刻的句子。
-
-这部分以后会单独整理，而不是随便找几句话填进去。
-
----
-
-## 十三、继续检查其他配置
-
-在熟悉网站结构以后，我又把 `src/config/` 中其他配置大致检查了一遍。
-
-包括：
-
-```text
-footerConfig.ts
-licenseConfig.ts
-sakuraConfig.ts
-fullscreenWallpaperConfig.ts
-commentConfig.ts
-relatedPostsConfig.ts
-randomPostsConfig.ts
-shareConfig.ts
-permalinkConfig.ts
-markdownConfig.ts
-expressiveCodeConfig.ts
-pioConfig.ts
-```
-
-一些目前的设置如下。
-
-### Footer
-
-暂时关闭：
+文章页面最终可以拿到：
 
 ```ts
-enable: false
-```
-
-### License
-
-目前使用：
-
-```text
-CC BY-NC-SA 4.0
-```
-
-### Sakura
-
-暂时关闭：
-
-```ts
-enable: false
-```
-
-### 全屏壁纸
-
-目前开启：
-
-```ts
-enable: true
-```
-
-并使用与 Banner 相关的图片。
-
-### 评论
-
-目前暂时关闭：
-
-```ts
-enable: false
-```
-
-以后如果需要，可以再接入评论系统。
-
-### Related Posts
-
-相关文章功能开启：
-
-```text
-maxCount: 5
-```
-
-### Random Posts
-
-随机文章开启：
-
-```text
-maxCount: 5
-```
-
-### Share
-
-分享功能目前开启。
-
-### Permalink
-
-目前暂时没有启用自定义永久链接格式：
-
-```text
-enable: false
-```
-
-### Markdown
-
-图片网格、WikiLink、PlantUML 等功能已经开启。
-
-### Expressive Code
-
-代码块增强基本保持默认设置。
-
-### Pio
-
-目前开启了看板娘：
-
-```text
-enable: true
-position: "left"
-```
-
-使用的模型为：
-
-```text
-/pio/models/NOIR/noir.model3.json
-```
-
----
-
-## 十四、开始处理博客内容
-
-配置基本摸清楚以后，我开始进入：
-
-```text
-src/content/
-```
-
-这个目录。
-
-最开始里面有不少 Mizuki 自带的示例文章：
-
-```text
-src/content/
-├── posts/
-│   ├── content-pipeline-fixture.mdx
-│   ├── draft.md
-│   ├── encrypted-post.md
-│   ├── image-grid-demo.md
-│   ├── markdown-extended.md
-│   ├── markdown-mermaid.md
-│   ├── markdown-tutorial.md
-│   ├── video.md
-│   └── guide/
-│       ├── cover.webp
-│       └── index.md
-│
-└── spec/
-    ├── about.md
-    └── friends.md
-```
-
-这些内容大部分都是主题为了展示功能而提供的 Example。
-
-所以后面需要逐渐清理。
-
----
-
-## 十五、认识文章的 Frontmatter
-
-`guide/index.md` 是一个比较有用的示例。
-
-它介绍了一篇 Mizuki 文章通常应该怎么写，以及 Frontmatter 中可以有哪些字段。
-
-例如：
-
-```yaml
----
-title: "An Example Article"
-published: 2026-08-01
-updated: 2026-08-08
-description: "A short summary for previews."
-image: ./cover.webp
-tags: [Example, Guide]
-category: Guides
-draft: false
----
+Content
+headings
+remarkPluginFrontmatter
 ```
 
 其中：
 
-* `title`：文章标题
-* `published`：发布时间
-* `updated`：更新时间
-* `description`：文章简介
-* `image`：文章封面
-* `tags`：标签
-* `category`：分类
-* `draft`：是否为草稿
+```text
+Content
+```
 
-这些内容以后写自己的文章时都会用到。
+负责文章正文。
 
-因此这篇文章暂时保留下来作为参考，并进行了中文化。
+而：
+
+```text
+remarkPluginFrontmatter
+```
+
+则包含 Markdown 插件处理过程中生成的信息，例如：
+
+```text
+words
+minutes
+excerpt
+```
+
+因此文章页面显示的：
+
+```text
+字数
+阅读时间
+摘要
+```
+
+并不是简单从 Frontmatter 读取的。
 
 ---
 
-## 十六、汉化 Markdown 教程
+## 十六、清理主题自带的示例内容
 
-另外一个比较完整的示例是：
+Mizuki 原本自带了不少示例文章。
+
+例如：
 
 ```text
-src/content/posts/markdown-tutorial.md
+src/content/posts/
+├── content-pipeline-fixture.mdx
+├── draft.md
+├── encrypted-post.md
+├── image-grid-demo.md
+├── markdown-extended.md
+├── markdown-mermaid.md
+├── markdown-tutorial.md
+├── video.md
+└── guide/
+    ├── cover.webp
+    └── index.md
 ```
 
-这原本是一篇英文 Markdown 教程。
+这些文章主要是为了展示主题功能。
 
-它展示了很多 Markdown 语法，包括：
+例如：
 
-* 段落
+```text
+Markdown
+Mermaid
+图片网格
+视频
+草稿
+页面功能
+```
+
+所以并不是所有内容都应该直接删除。
+
+有些示例其实很有参考价值。
+
+---
+
+## 十七、保留真正有用的 Markdown 示例
+
+其中比较有价值的是：
+
+```text
+markdown-tutorial.md
+```
+
+它展示了大量 Markdown 功能：
+
 * 标题
+* 段落
 * 引用
 * 列表
 * 代码块
@@ -785,85 +780,81 @@ src/content/posts/markdown-tutorial.md
 * HTML
 * 语法高亮
 
-因为这些内容以后写博客时确实很有用，所以没有直接删除。
+所以我没有简单地把它删除，而是进行了中文化处理。
 
-而是决定把它完整汉化。
-
-例如原来的：
+例如：
 
 ```markdown
 ## Block Elements
 ```
 
-会改成：
+改成：
 
 ```markdown
 ## 块级元素
 ```
 
-原来的 Markdown 示例代码则尽量保留，因为它们本身就是教程的一部分。
+而示例代码本身仍然尽量保留。
 
-这样既可以保留主题自带的 Markdown 功能演示，也可以作为以后自己写文章时的参考。
+这样它就不再只是主题作者留下的 Example，而变成了一个可以长期作为自己写 Markdown 文章时参考的文档。
 
 ---
 
-## 十七、Mizuki 的独立 Content Git 仓库
+## 十八、建立自己的文章目录
 
-在处理 `src/content` 的过程中，还发现 Mizuki 支持另一种内容管理方式。
+为了把主题自带内容和自己的文章区分开，我建立了：
 
-项目中存在：
+```text
+src/content/posts/my-blog/
+```
+
+例如这篇文章本身就可以放在：
+
+```text
+src/content/posts/my-blog/build-this-blog.md
+```
+
+这样以后目录会更加清晰：
+
+```text
+src/content/posts/
+├── markdown-tutorial.md
+├── guide/
+└── my-blog/
+    └── build-this-blog.md
+```
+
+以后自己的建站记录、开发记录等文章都可以放在这里。
+
+---
+
+## 十九、关于独立 Content Git 仓库
+
+在检查 Mizuki 项目时，我还发现了：
 
 ```text
 scripts/sync-content.js
 ```
 
-这个脚本支持使用一个独立的 Content Git 仓库。
+这个脚本支持把博客内容独立到另外一个 Git 仓库。
 
-它默认寻找：
-
-```text
-D:\Projects\Mizuki\content
-```
-
-然后把里面的内容同步到：
+理论上可以形成：
 
 ```text
-src/content/posts
-src/content/spec
-src/data
-public/images
+Mizuki 项目 Git
+        +
+Content Git
 ```
 
-理论上可以变成：
+这样代码和内容可以分别维护。
+
+项目也会尝试寻找：
 
 ```text
-Mizuki 项目
-+
-独立 Content 仓库
+content/
 ```
 
-两个 Git 仓库分别管理。
-
----
-
-## 十八、为什么暂时不用独立 Content 仓库
-
-启动项目的时候出现过：
-
-```text
-内容目录不存在：D:\Projects\Mizuki\content
-警告：未设置 CONTENT_REPO_URL，将使用本地内容
-```
-
-一开始看到这个提示容易以为是项目出错了。
-
-后来检查了：
-
-```text
-scripts/sync-content.js
-```
-
-才发现这其实只是一个可选功能。
+目录。
 
 如果没有配置：
 
@@ -871,123 +862,53 @@ scripts/sync-content.js
 CONTENT_REPO_URL
 ```
 
-项目就继续使用本地：
+则继续使用本地：
 
 ```text
 src/content/
 ```
 
-因此这个提示不是网站运行错误。
-
-目前也不需要专门创建：
-
-```text
-D:\Projects\Mizuki\content
-```
-
-更不需要为了它额外建立一个 Git 仓库。
-
 ---
 
-## 十九、为什么现在不使用 .env
+## 二十、没有 Content 仓库并不是错误
 
-之前也检查过项目根目录下有没有：
-
-```text
-.env
-```
-
-使用：
-
-```powershell
-Get-Content .\.env
-```
-
-结果显示：
+开发过程中曾经看到过类似：
 
 ```text
-找不到路径，因为该路径不存在
+内容目录不存在
+未设置 CONTENT_REPO_URL
+将使用本地内容
 ```
 
-这也是正常的。
+刚开始看到这种提示，确实容易以为项目出了问题。
 
-因为我们目前根本没有启用独立 Content 仓库。
+后来检查了同步脚本以后才确认：
 
-所以现在：
+**这只是一个可选功能。**
+
+目前博客完全可以直接使用：
 
 ```text
-没有 .env
-没有 CONTENT_REPO_URL
+src/content/
+```
+
+因此现在：
+
+```text
 没有独立 Content 仓库
+没有 CONTENT_REPO_URL
+没有额外的 .env
 ```
 
 都没有问题。
 
-目前直接使用：
-
-```text
-src/content/
-```
-
-管理博客文章即可。
-
-以后如果真的需要把文章独立成第二个 Git 仓库，再考虑启用这个功能。
+对于目前这种个人博客来说，一个 Git 仓库管理整个项目反而更加简单。
 
 ---
 
-## 二十、建立自己的文章目录
+## 二十一、Git 管理整个博客
 
-在逐渐清理模板内容以后，我准备建立一个专门存放自己文章的目录：
-
-```text
-src/content/posts/my-blog/
-```
-
-通过 PowerShell 创建：
-
-```powershell
-New-Item -ItemType Directory .\src\content\posts\my-blog -Force
-```
-
-最终目录变成：
-
-```text
-src/content/posts/
-│
-├── markdown-tutorial.md
-│
-├── guide/
-│   ├── cover.webp
-│   └── index.md
-│
-└── my-blog/
-```
-
-以后自己的文章就可以放在：
-
-```text
-my-blog/
-```
-
-里面。
-
-例如这篇文章本身：
-
-```text
-my-blog/build-this-blog.md
-```
-
-这样主题自带的示例文章和自己真正写的文章就可以区分开。
-
----
-
-## 二十一、Git：整个项目的版本管理
-
-这个博客从一开始就使用 Git 管理。
-
-这里需要区分两个概念。
-
-目前使用的是：
+目前项目采用的是：
 
 ```text
 一个 Git 仓库
@@ -995,20 +916,10 @@ my-blog/build-this-blog.md
 整个 Mizuki 项目
 ```
 
-而不是：
+也就是说：
 
 ```text
-Mizuki Git 仓库
-        +
-Blog Content Git 仓库
-```
-
-后者虽然 Mizuki 支持，但目前没有必要。
-
-对于现在这个阶段来说，一个仓库更加简单：
-
-```text
-项目代码
+代码
 +
 配置
 +
@@ -1019,169 +930,302 @@ Blog Content Git 仓库
 
 一起进行版本管理。
 
-以后每完成一部分修改，就可以通过 Git 保存一个版本。
+而不是：
 
-这样如果某次修改把网站改坏了，也可以比较容易地回退。
+```text
+Mizuki Git
++
+Content Git
+```
+
+这种拆分方式。
+
+目前没有必要把事情搞得太复杂。
+
+以后如果博客内容越来越多，或者真的需要多人协作，再考虑独立 Content 仓库也不迟。
 
 ---
 
-## 二十二、未来准备使用 GitHub
+## 二十二、为什么我觉得 Git 很重要
 
-现在博客主要还是本地开发。
+这个博客从一开始就不是单纯“下载一个主题然后改文件”。
 
-后面的计划是：
+我希望把整个过程都作为一个完整的开发项目来做。
+
+所以 Git 对我来说非常重要。
+
+例如完成一部分功能以后，可以：
+
+```powershell
+git add .
+git commit -m "update blog config"
+```
+
+如果之后某次修改把网站弄坏了，也可以通过 Git 找到之前的版本。
+
+以后再接入 GitHub，就可以形成：
 
 ```text
-本地 Mizuki
-      ↓
-Git
-      ↓
+本地开发
+   ↓
+Git commit
+   ↓
 GitHub
-      ↓
-部署平台
-      ↓
-正式网站
+   ↓
+自动构建
+   ↓
+网站部署
 ```
 
-这样以后：
-
-* 本地修改
-* Git 提交
-* GitHub 保存
-* 部署平台自动构建
-
-整个流程就可以串起来。
-
-这也是我选择 Git 管理整个项目的主要原因之一。
+这样博客就真正拥有了一套比较完整的开发流程。
 
 ---
 
-## 二十三、独立域名
+## 二十三、最后的构建测试
 
-现在 `siteConfig.ts` 中仍然保留着主题原本的：
+在完成这一轮修改之后，我最终运行了：
+
+```powershell
+pnpm build
+```
+
+这次构建完整通过。
+
+最终结果包括：
 
 ```text
-siteURL
+19 page(s) built
+Build Complete!
 ```
 
-暂时没有修改。
-
-这是因为目前还没有确定最终的域名和部署方案。
-
-未来如果购买一个真正属于自己的域名，例如：
+Sitemap 也正常生成：
 
 ```text
-https://example.com/
+sitemap-index.xml
 ```
 
-那么再修改：
-
-```ts
-siteURL: "https://example.com/"
-```
-
-同时配置：
+之后 Pagefind 搜索索引也正常生成：
 
 ```text
-DNS
-+
-部署平台
-+
-域名
+Indexed 1 language
+Indexed 4 pages
+Indexed 1239 words
 ```
 
-这样博客才真正从本地项目变成一个公开的网站。
+同时还通过了页面样式检查：
+
+```text
+Verified homepage styles
+Verified about page styles
+```
+
+字体加载检查也正常：
+
+```text
+Font loading check passed
+```
+
+这意味着目前这套博客至少已经能够完整通过一次正式的生产构建。
 
 ---
 
-## 二十四、现在博客已经走到哪一步了？
+## 二十四、现在的博客已经是什么状态？
 
-到现在为止，整个过程已经从最初的：
+从最开始的：
 
 ```text
-一个 Mizuki 模板
+一个刚下载下来的 Mizuki 模板
 ```
 
-逐渐变成：
+到现在：
 
 ```text
 XC's Blog
 ```
 
-目前已经完成或者基本完成：
+中间其实改了不少东西。
 
-* Astro 本地运行
-* Mizuki 安装
-* 中文化
-* 网站基本配置
-* 头像替换
-* Navbar 结构检查
-* Sidebar 结构检查
-* 网易云音乐播放器配置
-* Banner / 壁纸结构检查
-* Markdown 配置检查
-* About 页面处理
-* Markdown 教程汉化
-* 写作结构示例整理
-* `my-blog` 文章目录建立
-* Git 作为整个项目的版本管理
+目前已经完成的主要工作包括：
 
-目前还没有正式完成的部分包括：
+* Astro + Mizuki 本地环境搭建
+* pnpm 依赖安装
+* Git 项目管理
+* 网站中文化
+* 网站标题修改
+* 独立域名配置
+* Banner 配置
+* 主题视觉配置
+* Sidebar 检查与调整
+* 音乐播放器配置
+* Markdown 功能检查
+* Content Collection 检查
+* 文章 Loader 检查
+* 文章渲染流程检查
+* 站点统计字数计算修复
+* 示例文章整理
+* Markdown 教程中文化
+* 自己的 `my-blog` 文章目录建立
+* 独立 Content Git 机制研究
+* 生产环境构建测试
+* Sitemap 生成
+* Pagefind 搜索索引生成
 
-* 最终 Profile 文案
-* Navbar 最终结构
-* Announcement
-* Banner 最终图片和文字
-* Galgame 名句
-* Friends 页面
-* Example 内容彻底清理
-* 第一批正式博客文章
-* GitHub 仓库
-* 网站部署
-* 独立域名
+其中有些事情看起来很小，但实际上让我对这个项目的理解深入了很多。
 
 ---
 
-## 二十五、接下来
+## 二十五、这次搭博客最大的收获
 
-接下来不会再急着修改大量配置。
+其实到最后，我觉得这个项目最大的收获并不是“拥有了一个博客”。
 
-目前项目已经完成了从：
+而是第一次比较完整地走了一遍一个 Web 项目的流程：
+
+```text
+选择技术栈
+    ↓
+获取开源项目
+    ↓
+安装依赖
+    ↓
+本地运行
+    ↓
+阅读项目结构
+    ↓
+修改配置
+    ↓
+修改组件
+    ↓
+处理内容
+    ↓
+排查 Bug
+    ↓
+Git 版本管理
+    ↓
+生产构建
+    ↓
+准备部署
+```
+
+尤其是在处理站点字数统计的时候，我第一次比较完整地追踪了：
+
+```text
+Markdown
+   ↓
+Astro Content
+   ↓
+Loader
+   ↓
+render()
+   ↓
+remarkPluginFrontmatter
+   ↓
+页面组件
+```
+
+这比单纯修改几个 CSS 要有意思得多。
+
+因为当真正理解数据是怎么流动的以后，以后再遇到类似问题，就不会只能靠“改一个试一下”。
+
+---
+
+## 二十六、接下来准备做什么
+
+现在博客已经从：
 
 ```text
 “能跑起来的 Mizuki 模板”
 ```
 
-到：
+进入了：
 
 ```text
-“开始属于 XC 的个人博客”
+“真正属于 XC 的个人博客”
 ```
 
-这个阶段。
+下一步不会再急着大规模修改主题。
 
-下一步主要就是继续清理主题自带的 Example 内容，然后开始真正写自己的文章。
+接下来更重要的是开始产生真正属于自己的内容。
 
-以后如果需要，还可以继续完善：
+例如：
 
-* 首页视觉风格
+```text
+学习笔记
+电气工程
+电力系统
+AI
+项目开发
+编程
+音乐
+音游
+Galgame
+数码设备
+```
+
+同时继续完善：
+
+* Profile
+* Navbar
+* Announcement
 * Banner
-* 个人资料
-* 导航栏
-* 音乐播放器
-* 文章分类
-* 标签
-* About 页面
-* Friends 页面
+* About
+* Friends
+* Projects
+* Timeline
+* 标签与分类
 * GitHub
 * 自动部署
-* 独立域名
 
-我希望这个博客最终不是一个“套了个主题的个人网站”，而是一个能够长期维护的个人空间。
+以及把剩余的主题示例内容逐渐清理干净。
 
-以后无论是学习电气工程、做项目、研究 AI，还是记录音乐、游戏和生活，都可以慢慢放到这里。
+---
 
-**博客本身也会成为我学习和折腾的一部分。**
+## 二十七、从模板到自己的博客
 
+现在回头看，这个过程其实挺有意思。
+
+一开始只是：
+
+```text
+下载 Mizuki
+↓
+pnpm install
+↓
+pnpm dev
 ```
+
+然后慢慢开始：
+
+```text
+看配置
+↓
+看组件
+↓
+看 Content
+↓
+看 Loader
+↓
+看 Renderer
+↓
+修改代码
+↓
+解决问题
+↓
+Git 管理
+↓
+Build
 ```
+
+最后它才逐渐变成：
+
+```text
+XC's Blog
+```
+
+我希望这个网站最终不会只是一个“套了 Mizuki 主题的个人网站”。
+
+它可以是一个长期维护的个人空间。
+
+以后无论是学习电气工程、研究电力系统、做 AI 项目，还是记录音乐、游戏、设备和生活，都可以慢慢放到这里。
+
+而这个博客本身，也会成为我学习和折腾的一部分。
+
