@@ -5,7 +5,139 @@
   <link href="https://xc4ever.cn/" rel="alternate" type="text/html"/>
   <link href="https://xc4ever.cn/atom.xml" rel="self" type="application/atom+xml"/>
   <id>https://xc4ever.cn/</id>
-  <updated>2026-08-19T00:00:00.000Z</updated>
+  <updated>2026-08-22T00:00:00.000Z</updated>
+  <entry>
+    <title>V2G相关文献阅读</title>
+    <link href="https://xc4ever.cn/posts/research/research-note-02/" rel="alternate" type="text/html"/>
+    <id>https://xc4ever.cn/posts/research/research-note-02/</id>
+    <published>2026-08-22T00:00:00.000Z</published>
+    <updated>2026-08-22T00:00:00.000Z</updated>
+    <summary>记录目前阅读V2G相关综述时的理解与思考。</summary>
+    <content type="html"><![CDATA[<section class="markdown-section"><h1 id="v2g相关">V2G相关<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-02/#v2g%E7%9B%B8%E5%85%B3"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h1><p>这里找到2012年、2019年与2021年的三篇关于V2G的综述性论文。</p><section class="markdown-section"><h2 id="2012年">2012年<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-02/#2012%E5%B9%B4"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h2><p>V2G的核心思想就是利用大量电动汽车的储能源作为电网和可再生能源的缓冲，当电网负荷过高时，由电动汽车储能源向电网馈电；而当电网负荷低时，用来存储电网过剩的发电量，避免造成浪费。</p><p>文章指出V2G可以为电网带来缓冲，但同时需要管理和平衡储电与行驶的需求。</p><p>文章提出四种V2G方法：</p><ul>
+<li>集中式</li>
+<li>自治式</li>
+<li>基于微网</li>
+<li>基于更换电池组</li>
+</ul><p>其中，微网是一种由负荷和微型电源共同组成的系统。</p><p>文章同时指出，V2G的调度需要从电网和用户两个角度同时或分别考虑，制定管理策略，寻找最大化车主利益的最优方案。</p><p>但截止2012年，大多数管理策略并不统一，而且考虑的限制条件不够全面。</p><p>V2G的实现方式是电网与汽车间的双向智能充电器。截止2012年，对于其的研究主要在于：</p><ul>
+<li>变换器结构</li>
+<li>谐波抑制</li>
+<li>效率</li>
+</ul><p>但对电池本身的寿命影响还有待研究。</p><p>此时国内对于V2G的研究还处于起步阶段。</p><hr /></section><section class="markdown-section"><h2 id="2019年">2019年<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-02/#2019%E5%B9%B4"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h2><p>在2019年的论文中，作者指出电动汽车具有用电间歇性与随机性特点，并赋予电动汽车源荷双重属性，且将V2G与微电网、虚拟电厂结合。</p><p>在微电网环境下，V2G可以为可再生能源就地消纳及稳定并网提供支撑，同时可再生能源以微网的形式就近消纳或并入大电网，可有效解决可再生能源波动性给电网带来的冲击。</p><p>电动汽车可以作为有效联接可再生能源、分布式能源与电力系统的储能单元。</p><p>虚拟电厂技术是以整合大规模分布式电源和主动负荷为目标的虚拟集合体，其目的是实现能源优化配置的同时，为经济调度提供灵活支撑。</p><p>而在一众研究分布式能源的数学模型中，EV与WT在虚拟电厂和微电网中显得格外突出。</p><p>大量的电动汽车同时接入电网充电会产生：</p><ul>
+<li>电压谐波</li>
+<li>电能损失</li>
+<li>变压器过载</li>
+</ul><p>等现象。</p><p>电动汽车充电会导致网侧电流谐波增大、电能质量下降；放电时势必会产生谐波，经放电过程中的升压、逆变后输出的电压谐波畸变率较大。</p><p>在谐波方面，已经有学者提出有效的抑制措施。</p><p>同时指出，V2G系统可以：</p><ul>
+<li>直接作为可再生能源的备份</li>
+<li>支持无功功率</li>
+<li>调节有功功率</li>
+<li>平衡负载</li>
+<li>削减峰值负载</li>
+<li>降低运营成本</li>
+<li>产生社会收益</li>
+<li>提高电网经受大扰动情况下的稳定性</li>
+</ul><p>其中，大扰动包括总线故障、发电机和分支跳闸以及负荷巨变等情况。</p><p>对于用户群体来说，V2G可以：</p><ul>
+<li>在满足电网需求的同时兼顾用户需求响应</li>
+<li>提升用户收益</li>
+</ul><p>并且，在电化学储能相关领域，V2G系统可以在给EV充电的同时平衡当地电网的负载需求，同时对于前文所述因为多次循环寿命下降不满足使用标准的情况，已经有二次利用退旧电池并商业化的案例。</p><p>同时，在环境方面，合理调度新能源车与调整充放电策略，可有效利用V2G技术降低碳排放。</p><hr /></section><section class="markdown-section"><h2 id="2021年">2021年<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-02/#2021%E5%B9%B4"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h2><p>到了2021年，随着EV的大量普及，新的问题也在显现。电动汽车无序充电可能会给配电网带来电压下降、线路过载以及能量损耗增大等棘手问题。</p><p>文章指出，V2G系统的主要组成部分有电池管理系统BMS、充放电机、V2G后台管理系统和V2G控制中心。</p><p>其中，V2G控制中心是V2G系统的心脏，它可以通过对负荷、风电的预测制定V2G的充放电计划并发布到各V2G后台管理系统进行汇总。</p><p>V2G后台管理系统汇总了电池管理系统通过充放电机所获取的充放电电流、电池容量与荷电状态、电池是否允许充放电等信息。</p><p>文章也具体阐述了电压下降和谐波污染：</p><p>当用电负荷处于高峰时，如果大量电动汽车接入充电设备进行充电，则此时配电网的供电压力很大导致电压下降；而谐波污染是在电动汽车接入配电网后，由电力电子设备生成了谐波干扰，谐波干扰导致测量仪表不准确，电力导线热老化。</p><p>同时，文章指出对于V2G这样的针对有序充电策略，用户满意度（用电方式满意度以及电费支出满意度）决定了实际上用户是否会响应策略。故此对电动汽车充电与放电时间分水岭的界定是当下亟待研究的问题。</p><p>截止2021年，V2G技术的经济效益逐渐突出。未来可能伴随“换电为主，充电为辅”的理念，通过电动汽车动力电池移动储能进一步降低电力系统的投资和运营成本。</p><hr /></section><section class="markdown-section"><h2 id="从v2g与电动汽车开始">从V2G与电动汽车开始<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-02/#%E4%BB%8Ev2g%E4%B8%8E%E7%94%B5%E5%8A%A8%E6%B1%BD%E8%BD%A6%E5%BC%80%E5%A7%8B"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h2><p>前文未提及的重要一点，研究表明对于单一一个电动车来说，平均日均驾驶时长可能不超2小时，空闲时长使得其确实有成为电网支撑的巨大潜力。恰当的充电控制不仅能够抑制、消除电动汽车对电网的不利影响，而且能够支撑电网运行，负荷调度的效益初步显现。特别是V2G技术的提出使得可在平均高达96%的空闲时间内利用电动汽车储能资源，调整充放电过程，促进可再生能源电力吸纳，为电网提供辅助服务。</p><p>电动汽车对于电力系统的主要影响在与充电负荷，又由以下因素影响：</p><ul>
+<li>出行需求：用户的出行习惯决定其期望的充电情况</li>
+<li>使用习惯：充电偏好与使用电池的习惯差异</li>
+<li>电池特性：实际充放电特性</li>
+<li>充电设施：充电设施不仅影响负荷的空间分布，同时影响电动汽车的普及程度</li>
+<li>电动汽车数量：决定负荷的整体规模</li>
+<li>充电控制方式： 直接控制与间接控制，有决定与引导的差别</li>
+</ul><p>而研究充电负荷的方法，从基于出行需求和充电站分析法出发，此前的方法有基于出行需求的确定分析法、Monte Carlo 模拟法和充电站充电负荷的概率分析法；基于充电站充电负荷的概率分析法。</p><p>但是以上方法均不能同时揭示充电负荷的时空特征，故有待进一步研究。</p><p>至于充电控制策略，是直接从结果上提升效益的方式，目前的控制策略分为</p><ol>
+<li>单一电动车辆充电控制 - 对用户侧的能源收益进行优化</li>
+<li>电动汽车群充电控制，通常是 aggregator 和配电网层面的研究 - 直接对汽车群的集中负荷进行控制，考虑的是电网侧的电压电损</li>
+<li>区域电力系统电动车辆充电控制 - 涉及多个 aggregator 的协调控制，在前基础上进一步考虑电力系统的运行</li>
+</ol><p>在未来控制策略研究中，需要综合考虑各方面所具有的效益，以使总体效益达到最大。</p><hr /></section><section class="markdown-section"><h2 id="目前的思考">目前的思考<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-02/#%E7%9B%AE%E5%89%8D%E7%9A%84%E6%80%9D%E8%80%83"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h2><p>V2G技术涉及到的不只是电动汽车向电网放电的问题。</p><p>此后在构建实际模型的时候，需要考虑到的可能包含：</p><ul>
+<li>V2G的具体实现是通过三种方式里的某一种或几种结合，如何确定实际使用的是何种。</li>
+<li>如何处理V2G系统，新能源发电系统二者之间的结合与并网离网的选择。</li>
+<li>在此基础上如何搭建V2G系统，如何处理电池与二次利用</li>
+<li>如何决策出一个合理的充放电策略（对于每一个设备）</li>
+<li>如何保证经济效应和用户满意度</li>
+</ul><p>同时，更显著的问题是，目前这些综述论文均未提及正常运行情况外V2G技术可能的潜力及作用，例如受灾情况下，与太阳能发电结合的V2G系统可能具有其他效益。</p></section></section>
+<section class="markdown-section"><h1 id="进一步研究">进一步研究<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-02/#%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%A0%94%E7%A9%B6"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h1><p>在看完V2G相关的综述之后，我决定沿着这条线回到电网的特征及需求中去，因为无论是电网本身和交通通讯网的联系，还是这些智能体的选择，都来源于电网运行中的实际需要。</p><p>例如：电网为什么需要调节 → 电网怎么计算状态 → 电网怎么进行调度 → 运行偏差怎么控制 → 新能源为什么增加调节需求 → 什么资源能提供灵活性 → 移动资源有什么特殊能力 → 灾害时这些能力能不能转换成恢复能力。</p></section>]]></content>
+    <author><name>XC</name></author>
+    <category term="科研"/>
+  </entry>
+  <entry>
+    <title>笔记 01：从一个模糊的研究方向开始</title>
+    <link href="https://xc4ever.cn/posts/research/research-note-01/" rel="alternate" type="text/html"/>
+    <id>https://xc4ever.cn/posts/research/research-note-01/</id>
+    <published>2026-08-21T00:00:00.000Z</published>
+    <updated>2026-08-21T00:00:00.000Z</updated>
+    <summary>记录我开始探索一个长期科研方向时，对电力、交通、通信、移动资源与强化学习的一些最初思考。</summary>
+    <content type="html"><![CDATA[<section class="markdown-section"><h1 id="从一个模糊的研究方向开始">从一个模糊的研究方向开始<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-01/#%E4%BB%8E%E4%B8%80%E4%B8%AA%E6%A8%A1%E7%B3%8A%E7%9A%84%E7%A0%94%E7%A9%B6%E6%96%B9%E5%90%91%E5%BC%80%E5%A7%8B"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h1><p>最近开始正式接触自己之后可能长期研究的方向。</p><p>老师给我的建议大致是：</p><blockquote>
+<p>关注强化学习的最新算法，用作智能体建模优化协同调度，场景可以考虑电力—交通—通信网，重点关注电动汽车、电动重卡、无人机等资源……</p>
+</blockquote><p>这并不是一个已经确定好的“小课题”，而更像是一个长期研究方向。</p><p>所以我现在并没有一个明确的论文题目，甚至还不知道最后真正值得研究的问题是什么。</p><section class="markdown-section"><h2 id="我现在知道什么">我现在知道什么？<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-01/#%E6%88%91%E7%8E%B0%E5%9C%A8%E7%9F%A5%E9%81%93%E4%BB%80%E4%B9%88"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h2><p>目前我大概知道几个课题中的关键词：</p><ul>
+<li>强化学习</li>
+<li>智能体</li>
+<li>协同调度</li>
+<li>电力系统</li>
+<li>交通系统</li>
+<li>通信系统</li>
+<li>电动汽车</li>
+<li>电动重卡</li>
+<li>无人机</li>
+<li>V2G</li>
+<li>配电网韧性</li>
+<li>极端灾害</li>
+<li>灾后恢复</li>
+</ul><p>但“知道这些关键词”和“理解这个研究方向”显然是两回事。</p></section><section class="markdown-section"><h2 id="我现在不明白什么">我现在不明白什么？<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-01/#%E6%88%91%E7%8E%B0%E5%9C%A8%E4%B8%8D%E6%98%8E%E7%99%BD%E4%BB%80%E4%B9%88"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h2><p>具体怎么入手这样一个宏大的问题？</p><p>具体要不要拆分不同场景，然后通过某种方法对这些场景进行统一？</p><p>正常运行和极端灾害情况下的资源调度，是不是也应该采用类似的逻辑？</p><p>这些 Agent 具体是什么？它们又应该在什么情况下发挥什么样的作用？</p><p>如果讨论的是韧性相关的问题，那么它显然不仅仅是成本与个体意愿之间的简单优化问题。比如，是否不能只把 EV 看作移动电源，或者仅仅看作通信网络中的一个接收方？</p><p>V2G 的技术涉及双向充电桩，这一技术目前仍然属于较新的应用方向。那么未来是否会陆续出现更多新的设备和技术，使得电力—交通—通信网络中的主体不再局限于目前这些电气设备？</p><p>如果这种变化确实可能发生，那么未来在哪些方向进行设备和技术革新可能更有价值？</p><p>这些问题目前我都没有答案。</p></section><section class="markdown-section"><h2 id="因此我准备先从文献开始">因此，我准备先从文献开始<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-01/#%E5%9B%A0%E6%AD%A4%E6%88%91%E5%87%86%E5%A4%87%E5%85%88%E4%BB%8E%E6%96%87%E7%8C%AE%E5%BC%80%E5%A7%8B"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h2><p>我现在不准备直接确定研究题目。</p><p>第一步是去阅读相关领域的论文，看看其他研究者到底是如何定义这些问题的。</p><p>我准备首先考虑如何获取论文，以及不同论文能够提供什么层级的信息和知识。</p><p>我初步把论文分为以下层级：</p><div class="table-wrapper">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>层级</th><th>介绍</th></tr></thead><tbody><tr><td>L1</td><td>介绍某个电气设备或元件的论文</td></tr><tr><td>L2</td><td>介绍 EV 与 V2G 技术的论文</td></tr><tr><td>L3</td><td>有关 V2G 与配电网关系的论文</td></tr><tr><td>L4</td><td>有关移动储能资源的论文</td></tr><tr><td>L5</td><td>有关电力—交通—通信网络的论文</td></tr><tr><td>L6</td><td>有关电网与灾害恢复的论文</td></tr><tr><td>L7</td><td>有关多智能体电网优化的论文</td></tr><tr><td>L8</td><td>有关跨场景电网韧性与自适应的论文</td></tr><tr><td>L9</td><td>有关机器学习优化电网的论文</td></tr></tbody></table></div><p>这里的层级并不意味着论文的重要程度，而是我目前按照自己理解的知识关联程度，对后续需要阅读的内容进行的一个初步分类。</p><p>随着阅读的深入，这个分类可能会不断调整。</p></section><section class="markdown-section"><h2 id="这一阶段的目标">这一阶段的目标<a class="anchor" href="https://xc4ever.cn/posts/research/research-note-01/#%E8%BF%99%E4%B8%80%E9%98%B6%E6%AE%B5%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="anchor-icon" data-pagefind-ignore>#</span></a></h2><p>不是马上找到一个可以发表的课题。</p><p>而是逐渐回答：</p><blockquote>
+<p><strong>怎么去拆解这个大的研究方向？</strong></p>
+</blockquote><p>以及：</p><blockquote>
+<p><strong>别人已经研究到了哪里？</strong></p>
+</blockquote><p>最后再看看：</p><blockquote>
+<p><strong>还有什么问题没有被很好地解决？</strong></p>
+</blockquote><p>这应该才是我现在真正需要做的事情。</p></section></section>]]></content>
+    <author><name>XC</name></author>
+    <category term="科研"/>
+  </entry>
   <entry>
     <title>如何在 Mizuki 中撰写博客文章</title>
     <link href="https://xc4ever.cn/posts/guide/" rel="alternate" type="text/html"/>
