@@ -712,7 +712,9 @@ $$
 0\le P^+_{b,t} \le U_{b,t}\overline{P}^{g+}, \qquad \forall b\in B*{gd} \tag{31}
 $$
 
-$$ (U*{b,t}-1)\,\overline{P}^{g-} \le P^-*{b,t} \le 0, \qquad \forall b\in B\_{gd} \tag{32} $$
+$$
+(U*{b,t}-1)\,\overline{P}^{g-} \le P^-*{b,t} \le 0, \qquad \forall b\in B\_{gd} \tag{32}
+$$
 
 $$
 U*{b,t}\in\{0,1\}, \qquad \forall b\in B*{gd} \tag{33}
@@ -787,25 +789,25 @@ Routing→交通流量→行驶时间→交通能耗→SOC→Scheduling→AC-OPF
 | \(b,p\)     | 母线编号                 | 两个节点             |
 | \(l\)       | 线路编号                 | 某条线路             |
 
-| 符号               | 含义                       | 正负/性质                |
-| ------------------ | -------------------------- | ------------------------ |
-| \(P^c\_{i,t}\)     | EV\(i\)的充电功率          | \(>0\) 表示充电          |
-| \(P^d\_{i,t}\)     | EV\(i\)的放电功率          | 本文约定 \(<0\) 表示放电 |
-| \(P^{dg}\_{g,t}\)  | DG\(g\)的有功出力          | 发电                     |
-| \(Q^{dg}\_{g,t}\)  | DG\(g\)的无功出力          | 无功功率                 |
-| \(P^{wt}\_{g,t}\)  | 风电实际有功出力           | 风电                     |
-| \(P^{pv}\_{g,t}\)  | 光伏实际有功出力           | 光伏                     |
-| \(P^{cur}\_{g,t}\) | 可再生能源弃电功率         | 没有被利用的风/光电      |
-| \(P^+\_{b,t}\)     | 从主电网向配电网购入的功率 | \(>0\) 表示进口          |
-| \(P^-\_{b,t}\)     | 从配电网向主电网送出的功率 | \(<0\) 表示出口          |
-| \(P^{ex}\_{b,t}\)  | 母线\(b\)的有功功率交换量  | 网络交换功率             |
-| \(Q^{ex}\_{b,t}\)  | 母线\(b\)的无功功率交换量  | 网络交换功率             |
-| \(P\_{bp,t}\)      | 线路\(b-p\)上的有功潮流    | 在线路上传输             |
-| \(Q\_{bp,t}\)      | 线路\(b-p\)上的无功潮流    | 在线路上传输             |
-| \(P^{lo}\_{bp,t}\) | 线路有功损耗的线性化表示   | 损耗                     |
-| \(Q^{lo}\_{bp,t}\) | 线路无功损耗的线性化表示   | 损耗                     |
-| \(P^{ed}\_{d,t}\)  | 负荷\(d\)的有功需求        | 负荷                     |
-| \(Q^{ed}\_{d,t}\)  | 负荷\(d\)的无功需求        | 负荷                     |
+| 符号               | 含义                       | 正负/性质               |
+| ------------------ | -------------------------- | ----------------------- |
+| \(P^c\_{i,t}\)     | EV\(i\)的充电功率          | \(>0\) 表示充电         |
+| \(P^d\_{i,t}\)     | EV\(i\)的放电功率          | 本文约定\(<0\) 表示放电 |
+| \(P^{dg}\_{g,t}\)  | DG\(g\)的有功出力          | 发电                    |
+| \(Q^{dg}\_{g,t}\)  | DG\(g\)的无功出力          | 无功功率                |
+| \(P^{wt}\_{g,t}\)  | 风电实际有功出力           | 风电                    |
+| \(P^{pv}\_{g,t}\)  | 光伏实际有功出力           | 光伏                    |
+| \(P^{cur}\_{g,t}\) | 可再生能源弃电功率         | 没有被利用的风/光电     |
+| \(P^+\_{b,t}\)     | 从主电网向配电网购入的功率 | \(>0\) 表示进口         |
+| \(P^-\_{b,t}\)     | 从配电网向主电网送出的功率 | \(<0\) 表示出口         |
+| \(P^{ex}\_{b,t}\)  | 母线\(b\)的有功功率交换量  | 网络交换功率            |
+| \(Q^{ex}\_{b,t}\)  | 母线\(b\)的无功功率交换量  | 网络交换功率            |
+| \(P\_{bp,t}\)      | 线路\(b-p\)上的有功潮流    | 在线路上传输            |
+| \(Q\_{bp,t}\)      | 线路\(b-p\)上的无功潮流    | 在线路上传输            |
+| \(P^{lo}\_{bp,t}\) | 线路有功损耗的线性化表示   | 损耗                    |
+| \(Q^{lo}\_{bp,t}\) | 线路无功损耗的线性化表示   | 损耗                    |
+| \(P^{ed}\_{d,t}\)  | 负荷\(d\)的有功需求        | 负荷                    |
+| \(Q^{ed}\_{d,t}\)  | 负荷\(d\)的无功需求        | 负荷                    |
 
 这些量共同构成了式（19）中的节点功率平衡和式（23）–（24）中的线路潮流模型。
 
@@ -917,7 +919,9 @@ Routing→交通流量→行驶时间→交通能耗→SOC→Scheduling→AC-OPF
 
 该 Dec-POMDP 定义为：
 
-$$ \langle I,\mathcal S,\mathcal O,\mathcal A,\mathcal R,\mathcal T,\gamma\rangle $$
+$$
+\langle I,\mathcal S,\mathcal O,\mathcal A,\mathcal R,\mathcal T,\gamma\rangle
+$$
 
 其中包括：
 
@@ -926,7 +930,10 @@ $$ \langle I,\mathcal S,\mathcal O,\mathcal A,\mathcal R,\mathcal T,\gamma\rangl
   局部观测集合 O
   动作集合 A
   奖励函数集合 R
-  状态转移函数 $$ \mathcal T(s,a\_{1:I},\omega) $$
+  状态转移函数
+  $$
+  \mathcal T(s,a\_{1:I},\omega)
+  $$
 
 * 其受到环境状态 \(s\)、所有智能体的动作 \(a\_{1:I}\)，以及环境随机性 \(\omega\) 的影响。
 
@@ -939,11 +946,15 @@ $$ \langle I,\mathcal S,\mathcal O,\mathcal A,\mathcal R,\mathcal T,\gamma\rangl
 
 两个连续时间步之间的时间间隔为：
 
-$$ \Delta t=30\text{ min} $$
+$$
+\Delta t=30\text{ min}
+$$
 
 在时间步 \(t\)，每个智能体 \(i\) 根据自身的局部观测 \(o\_{i,t}\)，按照策略
 
-$$ \pi(a*{i,t}|o*{i,t}) $$
+$$
+\pi(a*{i,t}|o*{i,t})
+$$
 
 选择动作 \(a\_{i,t}\)。
 
@@ -953,34 +964,43 @@ $$ \pi(a*{i,t}|o*{i,t}) $$
 
 这一过程不断重复，从而形成每个智能体 \(i\) 的轨迹：
 
-$$ \tau*i = o*{i,1},a*{i,1},r*{i,1},o*{i,2},\ldots,r*{i,T} $$
+$$
+\tau*i = o*{i,1},a*{i,1},r*{i,1},o*{i,2},\ldots,r*{i,T}
+$$
 
 每个智能体的目标是最大化其累计折扣奖励：
 
-$$ R*i=\sum*{t=0}^{T}\gamma^t r\_{i,t} $$
+$$
+R*i=\sum*{t=0}^{T}\gamma^t r\_{i,t}
+$$
 
 其中：
 
-$$ \gamma\in[0,1) $$
+$$
+\gamma\in[0,1)
+$$
 
 为折扣因子。
 
 整个一天的时间范围为：
 
-$$ T=24\times2=48 $$
+$$
+T=24\times2=48
+$$
 
 即每个时间步为 30 分钟，因此一天共有 48 个时间步。
 
 变量总结：
-| 符号 | 含义 | 在本文中对应什么 |
-| -------------- | ------ | ---------------- |
-| \(I\) | 智能体数量 | EV 的数量 |
-| \(\mathcal S\) | 全局状态空间 | 整个电力–交通系统的状态 |
-| \(\mathcal O\) | 观测空间 | EV 能看到的局部信息 |
-| \(\mathcal A\) | 动作空间 | EV 能采取的路径/调度动作 |
-| \(\mathcal R\) | 奖励函数 | EV 执行动作后得到的收益/代价 |
-| \(\mathcal T\) | 状态转移函数 | 动作执行后系统如何变化 |
-| \(\gamma\) | 折扣因子 | 当前奖励和未来奖励的权衡 |
+
+| 符号           | 含义         | 在本文中对应什么             |
+| -------------- | ------------ | ---------------------------- |
+| \(I\)          | 智能体数量   | EV 的数量                    |
+| \(\mathcal S\) | 全局状态空间 | 整个电力–交通系统的状态      |
+| \(\mathcal O\) | 观测空间     | EV 能看到的局部信息          |
+| \(\mathcal A\) | 动作空间     | EV 能采取的路径/调度动作     |
+| \(\mathcal R\) | 奖励函数     | EV 执行动作后得到的收益/代价 |
+| \(\mathcal T\) | 状态转移函数 | 动作执行后系统如何变化       |
+| \(\gamma\)     | 折扣因子     | 当前奖励和未来奖励的权衡     |
 
 由此看来，dec-POMOP 有如下显著特征：
 
@@ -994,25 +1014,35 @@ $$ T=24\times2=48 $$
 
 论文定义：
 
-$$ s*t=\{o*{1,t},\ldots,o\_{I,t}\}\in\mathcal S $$
+$$
+s*t=\{o*{1,t},\ldots,o\_{I,t}\}\in\mathcal S
+$$
 
 把所有 EV 的局部观测集合起来，构成环境状态。
 
 单辆 EV \(i\) 的观测是 8 维：
 
-$$ o*{i,t}= [ R^{rd}*{i,t}, V^{rd}_{i,t}, N^{rd}_{i,t}, P^{ed}_{i,t}, P^{res}_{i,t}, S^{ev}\_{i,t}, \lambda^g_t, \lambda^c_t ] \tag{34} $$
+$$
+o*{i,t}= [ R^{rd}*{i,t}, V^{rd}_{i,t}, N^{rd}_{i,t}, P^{ed}_{i,t}, P^{res}_{i,t}, S^{ev}\_{i,t}, \lambda^g_t, \lambda^c_t ] \tag{34}
+$$
 
 可以分成两半：
 
-$$ \boxed{\text{交通信息}} $$
+$$
+\boxed{\text{交通信息}}
+$$
 
 和
 
-$$ \boxed{\text{电力信息}} $$
+$$
+\boxed{\text{电力信息}}
+$$
 
 交通侧是：
 
-$$ R^{rd},V^{rd},N^{rd} $$
+$$
+R^{rd},V^{rd},N^{rd}
+$$
 
 分别对应：
 
@@ -1022,7 +1052,9 @@ EV 正在前往的终止节点。
 
 电力侧是：
 
-$$ P^{ed},P^{res},SOC,\lambda^g,\lambda^c $$
+$$
+P^{ed},P^{res},SOC,\lambda^g,\lambda^c
+$$
 
 即：
 
@@ -1041,7 +1073,9 @@ $$ P^{ed},P^{res},SOC,\lambda^g,\lambda^c $$
 
 论文定义：
 
-$$ a*{i,t} = [ a^{trl}*{i,t}, a^{pow}_{i,t}, a^{bsu}_{i,t}, a^{bsd}\_{i,t} ] \tag{35} $$
+$$
+a*{i,t} = [ a^{trl}*{i,t}, a^{pow}_{i,t}, a^{bsu}_{i,t}, a^{bsd}\_{i,t} ] \tag{35}
+$$
 
 四个动作：
 
@@ -1054,11 +1088,15 @@ $$ a*{i,t} = [ a^{trl}*{i,t}, a^{pow}_{i,t}, a^{bsu}_{i,t}, a^{bsd}\_{i,t} ] \ta
 
 其中路径动作：
 
-$$ a^{trl}\_{i,t}\in\{0,1,2\} $$
+$$
+a^{trl}\_{i,t}\in\{0,1,2\}
+$$
 
 例如：
 
-$$ 0=\text{直行},\quad 1=\text{左转},\quad 2=\text{右转} $$
+$$
+0=\text{直行},\quad 1=\text{左转},\quad 2=\text{右转}
+$$
 
 在当前位置，根据交通网络拓扑，从当前节点可行的方向中选择下一步走向。
 
@@ -1068,7 +1106,9 @@ $$ 0=\text{直行},\quad 1=\text{左转},\quad 2=\text{右转} $$
 
 在时刻 \(t\)，所有 EV 做完动作以后，需要得到 \(t+1\) 时刻的新状态：
 
-$$ \boxed{ s*{t+1} = \mathcal T(o*{1:I,t},a\_{1:I,t},\omega_t) } $$
+$$
+\boxed{ s*{t+1} = \mathcal T(o*{1:I,t},a\_{1:I,t},\omega_t) }
+$$
 
 下一状态=f(当前状态,所有EV动作,环境随机性)
 
@@ -1078,7 +1118,13 @@ $$ \boxed{ s*{t+1} = \mathcal T(o*{1:I,t},a\_{1:I,t},\omega_t) } $$
 
 这种状态不是 EV 自己的动作决定的，而是外部环境变化带来的。
 
-作者前面列出的环境随机性 $$\omega^t $$ 具有不确定性。
+作者前面列出的环境随机性
+
+$$
+\omega^t
+$$
+
+具有不确定性。
 
 作者认为，与其先人为建立一个非常准确的概率模型，不如直接从历史数据/环境交互经验中学习这些不确定性的规律.
 
@@ -1094,48 +1140,77 @@ $$ \boxed{ s*{t+1} = \mathcal T(o*{1:I,t},a\_{1:I,t},\omega_t) } $$
 
 状态从时间步 \(t\) 到 \(t+1\) 的转移由
 
-$$ s*{t+1}=\mathcal{T}(o*{1:I,t},a\_{1:I,t},\omega_t) $$
+$$
+s*{t+1}=\mathcal{T}(o*{1:I,t},a\_{1:I,t},\omega_t)
+$$
 
 决定。
 
 在本文中，外生状态特征表示为
 
-$$ \omega*t= [V^{rd}*{i,t},P^{ed}_{i,t},P^{res}_{i,t},\lambda^g_t,\lambda^c_t] $$
+$$
+\omega*t= [V^{rd}*{i,t},P^{ed}_{i,t},P^{res}_{i,t},\lambda^g_t,\lambda^c_t]
+$$
 
 这些变量主要描述交通流量、负荷、可再生能源出力、电价和碳强度信号等具有不确定性的环境因素。
 
 对于接入电网的 EV，强化学习输出的归一化动作需要进一步转换为满足电池功率和 SoC 约束的实际充放电功率。
 
 充电功率
-$$ P^c*{i,t}= \begin{cases} \min\left( a^{pow}*{i,t}\bar P*i, \dfrac{(S_i-S^{ev}*{i,t})E*i}{\eta^c_i\Delta t} \right), & a^{pow}*{i,t}\geq0 \\[8pt] 0, & a^{pow}_{i,t}<0 \end{cases} \tag{36} $$
+
+$$
+P^c*{i,t}= \begin{cases} \min\left( a^{pow}*{i,t}\bar P*i, \dfrac{(S_i-S^{ev}*{i,t})E*i}{\eta^c_i\Delta t} \right), & a^{pow}*{i,t}\geq0 \\[8pt] 0, & a^{pow}_{i,t}<0 \end{cases} \tag{36}
+$$
+
 放电功率
-$$ P^d_{i,t}= \begin{cases} 0, & a^{pow}_{i,t}\geq0 \\[8pt] \max\left( a^{pow}_{i,t}\bar P*i, -\dfrac{S^{ev}*{i,t}E*i\eta^d_i}{\Delta t} \right), & a^{pow}*{i,t}<0 \end{cases} \tag{37} $$
+
+$$
+P^d_{i,t}= \begin{cases} 0, & a^{pow}_{i,t}\geq0 \\[8pt] \max\left( a^{pow}_{i,t}\bar P*i, -\dfrac{S^{ev}*{i,t}E*i\eta^d_i}{\Delta t} \right), & a^{pow}*{i,t}<0 \end{cases} \tag{37}
+$$
+
 Up-BS 提供量
-$$ B^u*{i,t}= \begin{cases} \min\left( \max\left( a^{bsu}*{i,t}(\bar P*i+P^c*{i,t}), \dfrac{(S^{ev}_{i,t}-S_i)E_i}{\Delta t}+P^c_{i,t} \right), \dfrac{S^{ev}_{i,t}E_i}{\Delta t}+P^c_{i,t} \right), & a^{pow}_{i,t}\geq0 \\[12pt] \min\left( \max\left( a^{bsu}_{i,t}(\bar P*i+P^d*{i,t}), \dfrac{(S*i-S^{ev}*{i,t})E*i}{\Delta t}+P^d*{i,t} \right), \dfrac{S^{ev}_{i,t}E_i}{\Delta t}+P^d_{i,t} \right), & a^{pow}_{i,t}<0 \end{cases} \tag{38} $$
+
+$$
+B^u*{i,t}= \begin{cases} \min\left( \max\left( a^{bsu}*{i,t}(\bar P*i+P^c*{i,t}), \dfrac{(S^{ev}_{i,t}-S_i)E_i}{\Delta t}+P^c_{i,t} \right), \dfrac{S^{ev}_{i,t}E_i}{\Delta t}+P^c_{i,t} \right), & a^{pow}_{i,t}\geq0 \\[12pt] \min\left( \max\left( a^{bsu}_{i,t}(\bar P*i+P^d*{i,t}), \dfrac{(S*i-S^{ev}*{i,t})E*i}{\Delta t}+P^d*{i,t} \right), \dfrac{S^{ev}_{i,t}E_i}{\Delta t}+P^d_{i,t} \right), & a^{pow}_{i,t}<0 \end{cases} \tag{38}
+$$
+
 Down-BS 提供量
-$$ B^d_{i,t}= \begin{cases} \min\left( \max\left( a^{bsd}_{i,t}(\bar P_i-P^c_{i,t}), -\dfrac{S^{ev}_{i,t}E_i}{\Delta t}-P^c_{i,t} \right), \dfrac{(S*i-S^{ev}*{i,t})E*i}{\Delta t}-P^c*{i,t} \right), & a^{pow}_{i,t}\geq0 \\[12pt] \min\left( \max\left( a^{bsd}_{i,t}(\bar P*i-P^d*{i,t}), -\dfrac{S^{ev}_{i,t}E_i}{\Delta t}-P^d_{i,t} \right), \dfrac{(S*i-S^{ev}*{i,t})E*i}{\Delta t}-P^d*{i,t} \right), & a^{pow}\_{i,t}<0 \end{cases} \tag{39} $$
+
+$$
+B^d_{i,t}= \begin{cases} \min\left( \max\left( a^{bsd}_{i,t}(\bar P_i-P^c_{i,t}), -\dfrac{S^{ev}_{i,t}E_i}{\Delta t}-P^c_{i,t} \right), \dfrac{(S*i-S^{ev}*{i,t})E*i}{\Delta t}-P^c*{i,t} \right), & a^{pow}_{i,t}\geq0 \\[12pt] \min\left( \max\left( a^{bsd}_{i,t}(\bar P*i-P^d*{i,t}), -\dfrac{S^{ev}_{i,t}E_i}{\Delta t}-P^d_{i,t} \right), \dfrac{(S*i-S^{ev}*{i,t})E*i}{\Delta t}-P^d*{i,t} \right), & a^{pow}\_{i,t}<0 \end{cases} \tag{39}
+$$
 
 最后，EV 的 SoC 根据其是否接入电网进行状态转移：
 
-$$ S^{ev}_{i,t+1}= \begin{cases} S^{ev}_{i,t} + \left( P^c*{i,t}\eta^c_i+ \dfrac{P^d*{i,t}}{\eta^d*i} \right) \dfrac{\Delta t}{E_i}, & A*{i,t}=1 \\[10pt] S^{ev}_{i,t}-E^{con}_{i,t}, & A\_{i,t}=0 \end{cases} \tag{40} $$
+$$
+S^{ev}_{i,t+1}= \begin{cases} S^{ev}_{i,t} + \left( P^c*{i,t}\eta^c_i+ \dfrac{P^d*{i,t}}{\eta^d*i} \right) \dfrac{\Delta t}{E_i}, & A*{i,t}=1 \\[10pt] S^{ev}_{i,t}-E^{con}_{i,t}, & A\_{i,t}=0 \end{cases} \tag{40}
+$$
 
 其中：
 
-$$ A\_{i,t}=1 $$
+$$
+A\_{i,t}=1
+$$
 
 表示 EV 接入电力网络，此时 SoC 由充放电过程决定；
 
-$$ A\_{i,t}=0 $$
+$$
+A\_{i,t}=0
+$$
 
 表示 EV 正在交通网络中行驶，此时 SoC 因行驶能耗 \(E^{con}\_{i,t}\) 而下降。
 
 因此，式（36）–（39）描述的是：
 
-$$ \boxed{ \text{强化学习动作} \rightarrow \text{实际充放电功率及 BS 提供量} } $$
+$$
+\boxed{ \text{强化学习动作} \rightarrow \text{实际充放电功率及 BS 提供量} }
+$$
 
 而式（40）描述的是：
 
-$$ \boxed{ \text{实际动作} \rightarrow \text{下一时刻 EV 的 SoC} } $$
+$$
+\boxed{ \text{实际动作} \rightarrow \text{下一时刻 EV 的 SoC} }
+$$
 
 ### 奖励函数
 
@@ -1148,15 +1223,21 @@ $$ \boxed{ \text{实际动作} \rightarrow \text{下一时刻 EV 的 SoC} } $$
 
 具体公式是：
 
-$$ r*{i,t} = -\kappa \left( u^{rd}*{i,r,t}T^{trl}_{r,t} \right) -\lambda^{lmp}_{b,t}P^c*{i,t} -\lambda^{lmp}*{b,t}P^d*{i,t} +\lambda_b(B^u*{i,t}+B^d\_{i,t}) \tag{41} $$
+$$
+r*{i,t} = -\kappa \left( u^{rd}*{i,r,t}T^{trl}_{r,t} \right) -\lambda^{lmp}_{b,t}P^c*{i,t} -\lambda^{lmp}*{b,t}P^d*{i,t} +\lambda_b(B^u*{i,t}+B^d\_{i,t}) \tag{41}
+$$
 
 其中：
 
-$$ \forall i\in I,\quad \forall t\in T,\quad \forall r\in R^o,\quad \forall b\in B\_{ev} $$
+$$
+\forall i\in I,\quad \forall t\in T,\quad \forall r\in R^o,\quad \forall b\in B\_{ev}
+$$
 
 #### 驾驶时间
 
-$$ -\kappa \left( u^{rd}_{i,r,t}T^{trl}_{r,t} \right) $$
+$$
+-\kappa \left( u^{rd}_{i,r,t}T^{trl}_{r,t} \right)
+$$
 
 其中：
 
@@ -1166,23 +1247,31 @@ $$ -\kappa \left( u^{rd}_{i,r,t}T^{trl}_{r,t} \right) $$
 
 因为前面：
 
-$$ u^{rd}\_{i,r,t}\in\{0,1\} $$
+$$
+u^{rd}\_{i,r,t}\in\{0,1\}
+$$
 
 所以：
 
 如果 EV 没有走这条路：
 
-$$ u^{rd}=0 $$
+$$
+u^{rd}=0
+$$
 
 那么这一项就是 0。
 
 如果 EV 走了这条路：
 
-$$ u^{rd}=1 $$
+$$
+u^{rd}=1
+$$
 
 那么：
 
-$$ -\kappa T^{trl} $$
+$$
+-\kappa T^{trl}
+$$
 
 开得越久，reward 越低。
 
@@ -1190,15 +1279,21 @@ $$ -\kappa T^{trl} $$
 
 #### 充电成本
 
-$$ -\lambda^{lmp}_{b,t}P^c_{i,t} $$
+$$
+-\lambda^{lmp}_{b,t}P^c_{i,t}
+$$
 
 如果 EV 充电：
 
-$$ P^c>0 $$
+$$
+P^c>0
+$$
 
 那么：
 
-$$ -\lambda^{lmp}P^c<0 $$
+$$
+-\lambda^{lmp}P^c<0
+$$
 
 因此：
 
@@ -1206,17 +1301,23 @@ $$ -\lambda^{lmp}P^c<0 $$
 
 这里使用LMP电价：
 
-$$ \lambda^{lmp}\_{b,t} $$
+$$
+\lambda^{lmp}\_{b,t}
+$$
 
 同前所述，LMP 不是 EV 自己随便定的，而是 DNO 在 EV 的充放电功率和接入位置确定后，通过 AC-OPF 求出来的。论文明确说明，\(\lambda^{lmp}_{b,t}\) 是在给定 \(P^c_{i,t},P^d*{i,t}\) 和 EV 所连接母线集合 \(B*{ev}\) 后，通过 AC-OPF 得到的。
 
 #### 放电收益
 
-$$ -\lambda^{lmp}_{b,t}P^d_{i,t} $$
+$$
+-\lambda^{lmp}_{b,t}P^d_{i,t}
+$$
 
 同前所述
 
-$$ P^d\_{i,t}<0 $$
+$$
+P^d\_{i,t}<0
+$$
 
 表示放电。
 
@@ -1224,11 +1325,15 @@ EV 把电送出去，可以获得收益。
 
 因此前两项合起来就是充电花钱放电赚钱：
 
-$$ -\lambda^{lmp}P^c - \lambda^{lmp}P^d $$
+$$
+-\lambda^{lmp}P^c - \lambda^{lmp}P^d
+$$
 
 #### 辅助服务收益
 
-$$ +\lambda*b(B^u*{i,t}+B^d\_{i,t}) $$
+$$
++\lambda*b(B^u*{i,t}+B^d\_{i,t})
+$$
 
 这里：
 
@@ -1238,13 +1343,17 @@ $$ +\lambda*b(B^u*{i,t}+B^d\_{i,t}) $$
 
 因为：
 
-$$ B^u\geq0,\qquad B^d\geq0 $$
+$$
+B^u\geq0,\qquad B^d\geq0
+$$
 
 提供越多辅助服务容量，获得的奖励越高，注意这里奖励的是可提供的服务容量/承诺容量，而不只是实际发生的充放电电量。
 
 #### 权重
 
-$$ \kappa $$
+$$
+\kappa
+$$
 
 是一个 weighting factor，用来决定：
 
@@ -1252,7 +1361,9 @@ $$ \kappa $$
 
 所以可以把整个 reward 看成：
 
-$$ \underbrace{-\kappa T^{trl}}_{\text{不想堵在路上}} + \underbrace{(-\lambda^{lmp}P^c-\lambda^{lmp}P^d)}_{\text{充电成本/放电收益}} + \underbrace{\lambda*b(B^u+B^d)}*{\text{辅助服务收益}} $$
+$$
+\underbrace{-\kappa T^{trl}}_{\text{不想堵在路上}} + \underbrace{(-\lambda^{lmp}P^c-\lambda^{lmp}P^d)}_{\text{充电成本/放电收益}} + \underbrace{\lambda*b(B^u+B^d)}*{\text{辅助服务收益}}
+$$
 
 ## 多智能体强化学习算法
 
@@ -1277,7 +1388,9 @@ H2PSPPO 主要包含以下五个方面：
 
 其基本结构为：
 
-$$ o*{i,t} \rightarrow x*{i,t} \rightarrow a\_{i,t} $$
+$$
+o*{i,t} \rightarrow x*{i,t} \rightarrow a\_{i,t}
+$$
 
 其中：
 
@@ -1287,21 +1400,29 @@ $$ o*{i,t} \rightarrow x*{i,t} \rightarrow a\_{i,t} $$
 
 本文设置两个 option：
 
-$$ x\in \{ \text{routing}, \text{scheduling} \} $$
+$$
+x\in \{ \text{routing}, \text{scheduling} \}
+$$
 
 作者采用 option framework，将一个 option 看作持续若干时间步的高层动作，而具体的 primitive action 则由下层策略执行。对于 agent \(i\)，上层 option policy 表示为：
 
-$$ x*{i,t}=\mu(x|o*{i,t}) $$
+$$
+x*{i,t}=\mu(x|o*{i,t})
+$$
 
 在确定 option 后，EV 持续执行对应的低层策略，直到 option 被终止。终止策略表示为：
 
-$$ m*{i,t}=\beta(m|o*{i,t}) $$
+$$
+m*{i,t}=\beta(m|o*{i,t})
+$$
 
 其中 \(m\) 表示 option 的终止状态。论文采用 call-and-return 的 option execution model，即选择 option 后持续执行该 option，直到终止，再重新选择新的 option。
 
 作者表示这形成了：
 
-$$ \boxed{ \text{Observation} \rightarrow \text{Option selection} \rightarrow \text{Primitive action} \rightarrow \text{Environment} } $$
+$$
+\boxed{ \text{Observation} \rightarrow \text{Option selection} \rightarrow \text{Primitive action} \rightarrow \text{Environment} }
+$$
 
 相比直接输出所有动作，这种层次结构能够明确区分“交通决策阶段”和“电力决策阶段”。
 
@@ -1309,33 +1430,47 @@ $$ \boxed{ \text{Observation} \rightarrow \text{Option selection} \rightarrow \t
 
 Routing 动作属于离散空间：
 
-$$ a^{trl}\_{i,t}\in\{0,1,2\} $$
+$$
+a^{trl}\_{i,t}\in\{0,1,2\}
+$$
 
 例如分别表示：
 
-$$ \text{直行、左转、右转} $$
+$$
+\text{直行、左转、右转}
+$$
 
 而 scheduling 动作属于连续空间：
 
-$$ a^{pow}\_{i,t}\in[-1,1] $$
+$$
+a^{pow}\_{i,t}\in[-1,1]
+$$
 
 以及：
 
-$$ a^{bsu}_{i,t},a^{bsd}_{i,t}\in[0,1] $$
+$$
+a^{bsu}_{i,t},a^{bsd}_{i,t}\in[0,1]
+$$
 
 因此，本文的 action space 同时包含离散变量和连续变量。
 
 作者将原始 observation 划分为两个部分：
 
-$$ o*{i,t}=\{z*{i,t},e\_{i,t}\} $$
+$$
+o*{i,t}=\{z*{i,t},e\_{i,t}\}
+$$
 
 其中交通网络 observation 为：
 
-$$ z*{i,t} = [ R^{rd}*{i,t}, V^{rd}_{i,t}, N^{rd}_{i,t} ] $$
+$$
+z*{i,t} = [ R^{rd}*{i,t}, V^{rd}_{i,t}, N^{rd}_{i,t} ]
+$$
 
 电力网络 observation 为：
 
-$$ e*{i,t} = [ P^{ed}*{i,t}, P^{res}_{i,t}, E^{ev}_{i,t}, \lambda^g_t, \lambda^c_t ] $$
+$$
+e*{i,t} = [ P^{ed}*{i,t}, P^{res}_{i,t}, E^{ev}_{i,t}, \lambda^g_t, \lambda^c_t ]
+$$
 
 当 option 选择为 routing 时，使用 \(z*{i,t}\) 产生 routing 动作；当 option 选择为 scheduling 时，使用 \(e*{i,t}\) 产生 scheduling 动作。
 
@@ -1343,23 +1478,35 @@ $$ e*{i,t} = [ P^{ed}*{i,t}, P^{res}_{i,t}, E^{ev}_{i,t}, \lambda^g_t, \lambda^c
 
 离散 actor 由参数 \(\phi^d\) 表示：
 
-$$ k*{i,t} = \pi*{\phi^d}(k|z\_{i,t}) $$
+$$
+k*{i,t} = \pi*{\phi^d}(k|z\_{i,t})
+$$
 
 其输出经过 Softmax，得到三个离散 routing 动作的概率，然后按照该分类概率分布采样具体动作。
 
 连续 actor 由参数 \(\phi^c\) 表示：
 
-$$ c*{i,t} = \pi*{\phi^c}(c|e\_{i,t}) $$
+$$
+c*{i,t} = \pi*{\phi^c}(c|e\_{i,t})
+$$
 
 其输出对应连续动作的概率分布，并据此得到 scheduling 动作。
 
 因此，整个低层策略可以概括为：
 
-$$ a*{i,t} = \{k*{i,t},c\_{i,t}\} $$
+$$
+a*{i,t} = \{k*{i,t},c\_{i,t}\}
+$$
 
 其中：
 
-$$ k*{i,t} = [a^{trl}*{i,t}] $$ $$ c*{i,t} = [a^{pow}*{i,t},a^{bsu}_{i,t},a^{bsd}_{i,t}] $$
+$$
+k*{i,t} = [a^{trl}*{i,t}]
+$$
+
+$$
+c*{i,t} = [a^{pow}*{i,t},a^{bsu}_{i,t},a^{bsd}_{i,t}]
+$$
 
 在上述层次结构和混合策略确定之后，还需要利用强化学习算法对各个策略进行训练。
 
@@ -1369,25 +1516,35 @@ $$ k*{i,t} = [a^{trl}*{i,t}] $$ $$ c*{i,t} = [a^{pow}*{i,t},a^{bsu}_{i,t},a^{bsd
 
 普通的 state-option value function 可以表示为：
 
-$$ V\_\theta(o,x) $$
+$$
+V\_\theta(o,x)
+$$
 
 表示在当前 observation \(o\) 下选择 option \(x\) 后所能获得的期望价值。
 
 作者认为，仅使用 EV 的局部 observation 可能不足以描述整个电力–交通系统的动态状态，因此引入：
 
-$$ \lambda $$
+$$
+\lambda
+$$
 
 构造：
 
-$$ V\_\theta(o,x,\lambda) $$
+$$
+V\_\theta(o,x,\lambda)
+$$
 
 其中：
 
-$$ \lambda=\lambda^{lmp}\_i $$
+$$
+\lambda=\lambda^{lmp}\_i
+$$
 
 表示 EV \(i\) 接入电网节点对应的 LMP；当 EV 正在交通网络中行驶时：
 
-$$ \lambda=\mathrm{None} $$
+$$
+\lambda=\mathrm{None}
+$$
 
 论文特别指出，当前时刻的 LMP 不能直接加入 actor 的 observation，因为 LMP 需要在 EV 做出当前动作后，由 DNO 根据 AC-OPF 计算得到。因此在当前决策时刻，EV 并不能提前获得这个 LMP；但在训练 critic 时，相关经验已经产生，此时可以使用 LMP 作为 critic 的输入。
 
@@ -1399,39 +1556,59 @@ $$ \lambda=\mathrm{None} $$
 
 即所有 EV 使用相同的策略参数：
 
-$$ \pi_1=\pi_2=\cdots=\pi_I=\pi $$
+$$
+\pi_1=\pi_2=\cdots=\pi_I=\pi
+$$
 
 但每辆 EV 的局部观测不同：
 
-$$ o*{1,t}\neq o*{2,t}\neq\cdots\neq o\_{I,t} $$
+$$
+o*{1,t}\neq o*{2,t}\neq\cdots\neq o\_{I,t}
+$$
 
 因此即使使用相同的策略参数，不同 EV 仍然可以根据自身状态产生不同的动作：
 
-$$ \pi(o*{1,t})\neq\pi(o*{2,t}) $$
+$$
+\pi(o*{1,t})\neq\pi(o*{2,t})
+$$
 
 训练过程中，各个 EV 与环境交互产生的 trajectory 都可以用于更新共享策略。这样既保持了每辆 EV 的分布式执行，又可以利用所有 EV 的经验加速训练。
 
 综合上述设计，H2PSPPO 可以表示为：
 
-$$ \boxed{ \text{Local Observation} \rightarrow \text{Option Policy} \rightarrow \text{Routing / Scheduling} \rightarrow \text{Hybrid Policy} \rightarrow \text{Action} \rightarrow \text{Environment} } $$
+$$
+\boxed{ \text{Local Observation} \rightarrow \text{Option Policy} \rightarrow \text{Routing / Scheduling} \rightarrow \text{Hybrid Policy} \rightarrow \text{Action} \rightarrow \text{Environment} }
+$$
 
 其中：
 
-$$ \text{Option Policy} \rightarrow \begin{cases} \text{Routing}\\ \text{Scheduling} \end{cases} $$
+$$
+\text{Option Policy} \rightarrow \begin{cases} \text{Routing}\\ \text{Scheduling} \end{cases}
+$$
 
 然后：
 
-$$ \text{Routing} \rightarrow \text{Discrete Actor} \rightarrow a^{trl} $$ $$ \text{Scheduling} \rightarrow \text{Continuous Actor} \rightarrow (a^{pow},a^{bsu},a^{bsd}) $$
+$$
+\text{Routing} \rightarrow \text{Discrete Actor} \rightarrow a^{trl}
+$$
+
+$$
+\text{Scheduling} \rightarrow \text{Continuous Actor} \rightarrow (a^{pow},a^{bsu},a^{bsd})
+$$
 
 环境执行动作后产生：
 
-$$ r*{i,t},o*{i,t+1} $$
+$$
+r*{i,t},o*{i,t+1}
+$$
 
 并进一步利用 PPO 更新策略。
 
 与此同时，critic 使用：
 
-$$ V\_\theta(o,x,\lambda) $$
+$$
+V\_\theta(o,x,\lambda)
+$$
 
 进行价值估计；所有同质 EV 共享策略参数，以提高多智能体训练效率。
 
@@ -1439,7 +1616,9 @@ $$ V\_\theta(o,x,\lambda) $$
 
 文章采用 option framework 对 HRL 进行层次化建模。一个 option 定义为：
 
-$$ x=\langle\mathcal I,\beta,\pi\rangle\in\mathcal X $$
+$$
+x=\langle\mathcal I,\beta,\pi\rangle\in\mathcal X
+$$
 
 其中：
 
@@ -1449,37 +1628,51 @@ $$ x=\langle\mathcal I,\beta,\pi\rangle\in\mathcal X $$
 
 对于 agent \(i\) 在时间步 \(t\) 的上层决策，option 由 option policy \(\mu\) 选择：
 
-$$ x*{i,t}=\mu(x|o*{i,t})\rightarrow[0,1] $$
+$$
+x*{i,t}=\mu(x|o*{i,t})\rightarrow[0,1]
+$$
 
 在选定 \(x*{i,t}\) 后，agent 按照 intra-option policy \(\pi\) 连续执行低层动作 \(a*{i,t}\)，直到由 termination policy 决定结束：
 
-$$ m*{i,t}=\beta(m|o*{i,t})\rightarrow[0,1] $$
+$$
+m*{i,t}=\beta(m|o*{i,t})\rightarrow[0,1]
+$$
 
 因此，一个 option 可以持续多个时间步，而不是只对应一个 primitive action。
 
 对于 option 的状态转移，论文定义：
 
-$$ p(o*{i,t+1}|o*{i,t},x*{i,t}) = \sum*{f=1}^{T} p(o\_{i,t+1},f)\gamma^f $$
+$$
+p(o*{i,t+1}|o*{i,t},x*{i,t}) = \sum*{f=1}^{T} p(o\_{i,t+1},f)\gamma^f
+$$
 
 其中，\(p(o*{i,t+1},f)\) 表示当前 option 持续 \(f\) 个时间步后终止并到达 \(o*{i,t+1}\) 的概率。
 
 若一个 option 从 \(t\) 时刻开始并持续 \(f\) 个时间步，则其累计折扣奖励定义为：
 
-$$ R*i(o*{i,t},x*{i,t},o*{i,t+f}) = \mathbb E \left[ \sum_{z=t}^{t+f} \gamma^{z-t}r_{i,z} \right] $$
+$$
+R*i(o*{i,t},x*{i,t},o*{i,t+f}) = \mathbb E \left[ \sum_{z=t}^{t+f} \gamma^{z-t}r_{i,z} \right]
+$$
 
 在本文中采用 call-and-return option execution model：agent \(i\) 在时间步 \(t\) 根据 \(\mu\) 选择 option \(x\_{i,t}\)，随后按照 \(\pi\) 执行动作，直到该 option 根据 \(\beta\) 终止，再重新选择下一个 option。
 
 因此，agent 的轨迹由原来的
 
-$$ \tau*i=o*{i,1},a*{i,1},r*{i,1},o*{i,2},\ldots,r*{i,T} $$
+$$
+\tau*i=o*{i,1},a*{i,1},r*{i,1},o*{i,2},\ldots,r*{i,T}
+$$
 
 扩展为：
 
-$$ \tau*i= o*{i,1}, x*{i,1}, a*{i,1}, r*{i,1}, o*{i,2}, \ldots, r\_{i,T} $$
+$$
+\tau*i= o*{i,1}, x*{i,1}, a*{i,1}, r*{i,1}, o*{i,2}, \ldots, r\_{i,T}
+$$
 
 其轨迹空间为：
 
-$$ \mathcal O_i\times\mathcal X_i\times\mathcal A_i\times\mathcal O_i\rightarrow\mathbb R $$
+$$
+\mathcal O_i\times\mathcal X_i\times\mathcal A_i\times\mathcal O_i\rightarrow\mathbb R
+$$
 
 为了适应本文高维、连续的状态空间，作者进一步采用 actor–critic 架构，并使用深度神经网络对各函数进行参数化。
 
@@ -1487,19 +1680,25 @@ Actor
 
 Option policy：
 
-$$ \mu\_\psi(x|o) $$
+$$
+\mu\_\psi(x|o)
+$$
 
 参数为 \(\psi\)，负责选择 option。
 
 Intra-option policy：
 
-$$ \pi\_\phi(a|o) $$
+$$
+\pi\_\phi(a|o)
+$$
 
 参数为 \(\phi\)，负责在当前 option 下产生具体动作。
 
 Termination policy：
 
-$$ \beta\_\varphi(m|o) $$
+$$
+\beta\_\varphi(m|o)
+$$
 
 参数为 \(\varphi\)，负责决定当前 option 是否终止。
 
@@ -1507,21 +1706,29 @@ Critic
 
 定义 state-option value function：
 
-$$ V\_\theta(o,x) $$
+$$
+V\_\theta(o,x)
+$$
 
 参数为 \(\theta\)，用于估计在 observation \(o\) 下选择 option \(x\) 的期望价值。
 
 因此，本文的层次化策略结构可以表示为：
 
-$$ o*{i,t} \overset{\mu*\psi}{\longrightarrow} x*{i,t} \overset{\pi*\phi}{\longrightarrow} a\_{i,t} $$
+$$
+o*{i,t} \overset{\mu*\psi}{\longrightarrow} x*{i,t} \overset{\pi*\phi}{\longrightarrow} a\_{i,t}
+$$
 
 同时由：
 
-$$ \beta\_\varphi $$
+$$
+\beta\_\varphi
+$$
 
 决定 \(x\_{i,t}\) 何时终止，由：
 
-$$ V*\theta(o*{i,t},x\_{i,t}) $$
+$$
+V*\theta(o*{i,t},x\_{i,t})
+$$
 
 评价该 option 的价值。
 
@@ -1529,51 +1736,83 @@ $$ V*\theta(o*{i,t},x\_{i,t}) $$
 
 当上层 option \(x\_{i,t}\) 确定后，EV 根据 intra-option policy 生成具体动作：
 
-$$ a*{i,t}=\pi*\phi(a|o\_{i,t}) $$
+$$
+a*{i,t}=\pi*\phi(a|o\_{i,t})
+$$
 
 由于 routing 与 scheduling 分别属于离散和连续动作空间，作者将动作划分为：
 
-$$ a*{i,t}=\{k*{i,t},c\_{i,t}\} $$
+$$
+a*{i,t}=\{k*{i,t},c\_{i,t}\}
+$$
 
 其中：
 
-$$ k*{i,t}=[a^{trl}*{i,t}] $$
+$$
+k*{i,t}=[a^{trl}*{i,t}]
+$$
 
 表示离散的 routing 动作；
 
-$$ c*{i,t}=[a^{pow}*{i,t},a^{bs}\_{i,t}] $$
+$$
+c*{i,t}=[a^{pow}*{i,t},a^{bs}\_{i,t}]
+$$
 
 表示连续的 scheduling 动作。
 
 同时，将 observation 分为交通和电力两部分：
 
-$$ o*{i,t}=\{z*{i,t},e\_{i,t}\} $$
+$$
+o*{i,t}=\{z*{i,t},e\_{i,t}\}
+$$
 
 其中：
 
-$$ z*{i,t} = [R^{rd}*{i,t},V^{rd}_{i,t},N^{rd}_{i,t}] $$ $$ e*{i,t} = [P^{ed}*{i,t},P^{res}_{i,t},E^{ev}_{i,t},\lambda^g_t,\lambda^c_t] $$
+$$
+z*{i,t} = [R^{rd}*{i,t},V^{rd}_{i,t},N^{rd}_{i,t}]
+$$
+
+$$
+e*{i,t} = [P^{ed}*{i,t},P^{res}_{i,t},E^{ev}_{i,t},\lambda^g_t,\lambda^c_t]
+$$
 
 当选择 routing option 时，使用 \(z\_{i,t}\) 产生离散动作：
 
-$$ k*{i,t}=\pi*{\phi^d}(k|z\_{i,t}) $$
+$$
+k*{i,t}=\pi*{\phi^d}(k|z\_{i,t})
+$$
 
 离散 actor 使用 Softmax 输出各个离散动作的概率。
 
 当选择 scheduling option 时，使用 \(e\_{i,t}\) 产生连续动作：
 
-$$ c*{i,t}=\pi*{\phi^c}(c|e\_{i,t}) $$
+$$
+c*{i,t}=\pi*{\phi^c}(c|e\_{i,t})
+$$
 
 连续 actor 输出 Gaussian distribution 的均值和方差，并从该分布中采样连续动作。
 
 离散策略和连续策略分别使用 PPO 更新，其 clipped surrogate objectives 为：
 
-$$ L^{CLIP}_{i,t}(\phi^d) = \hat{\mathbb E}\_t \left[ \min \left( \zeta^d_{i,t}\hat A*{i,t}, \operatorname{clip} \left( \zeta^d*{i,t}, 1-\epsilon, 1+\epsilon \right) \hat A*{i,t} \right) \right] \tag{42} $$ $$ L^{CLIP}*{i,t}(\phi^c) = \hat{\mathbb E}_t \left[ \min \left( \zeta^c_{i,t}\hat A*{i,t}, \operatorname{clip} \left( \zeta^c*{i,t}, 1-\epsilon, 1+\epsilon \right) \hat A\_{i,t} \right) \right] \tag{43} $$
+$$
+L^{CLIP}_{i,t}(\phi^d) = \hat{\mathbb E}\_t \left[ \min \left( \zeta^d_{i,t}\hat A*{i,t}, \operatorname{clip} \left( \zeta^d*{i,t}, 1-\epsilon, 1+\epsilon \right) \hat A*{i,t} \right) \right] \tag{42}
+$$
+
+$$
+L^{CLIP}*{i,t}(\phi^c) = \hat{\mathbb E}_t \left[ \min \left( \zeta^c_{i,t}\hat A*{i,t}, \operatorname{clip} \left( \zeta^c*{i,t}, 1-\epsilon, 1+\epsilon \right) \hat A\_{i,t} \right) \right] \tag{43}
+$$
 
 其中，\(\epsilon\) 为 PPO 的 clipping 参数，用于限制新旧策略之间每次更新的幅度。
 
 离散策略和连续策略分别使用对应的概率比：
 
-$$ \zeta^d*{i,t} = \frac{ \pi*{\phi^d}(k*{i,t}|z*{i,t}) }{ \pi*{\phi^d*{\mathrm{old}}}(k*{i,t}|z*{i,t}) } $$ $$ \zeta^c*{i,t} = \frac{ \pi*{\phi^c}(c*{i,t}|e*{i,t}) }{ \pi*{\phi^c*{\mathrm{old}}}(c*{i,t}|e*{i,t}) } \tag{44} $$
+$$
+\zeta^d*{i,t} = \frac{ \pi*{\phi^d}(k*{i,t}|z*{i,t}) }{ \pi*{\phi^d*{\mathrm{old}}}(k*{i,t}|z*{i,t}) }
+$$
+
+$$
+\zeta^c*{i,t} = \frac{ \pi*{\phi^c}(c*{i,t}|e*{i,t}) }{ \pi*{\phi^c*{\mathrm{old}}}(c*{i,t}|e*{i,t}) } \tag{44}
+$$
 
 其中：
 
@@ -1584,31 +1823,45 @@ $$ \zeta^d*{i,t} = \frac{ \pi*{\phi^d}(k*{i,t}|z*{i,t}) }{ \pi*{\phi^d*{\mathrm{
 
 优势函数采用 generalized advantage function：
 
-$$ \hat A*{i,t} = \delta*{i,t} + \gamma\delta*{i,t+1} +\cdots+ \gamma^{T-t+1}\delta*{i,T-1} \tag{45} $$
+$$
+\hat A*{i,t} = \delta*{i,t} + \gamma\delta*{i,t+1} +\cdots+ \gamma^{T-t+1}\delta*{i,T-1} \tag{45}
+$$
 
 其中单步时序差分误差为：
 
-$$ \delta*{i,t} = r*{i,t} + \gamma V*\theta(o*{i,t+1},x*{i,t+1}) - V*\theta(o*{i,t},x*{i,t}) $$
+$$
+\delta*{i,t} = r*{i,t} + \gamma V*\theta(o*{i,t+1},x*{i,t+1}) - V*\theta(o*{i,t},x*{i,t})
+$$
 
-$$ \boxed{ \hat A\_{i,t} \text{ 用来衡量当前动作相对于 critic 估计的“好坏”} } $$
+$$
+\boxed{ \hat A\_{i,t} \text{ 用来衡量当前动作相对于 critic 估计的“好坏”} }
+$$
 
 也就是总的优势函数是每一步实际收益优于预期收益的累计。
 
 由于 EV 只能获得局部观测，传统的：
 
-$$ V\_\theta(o,x) $$
+$$
+V\_\theta(o,x)
+$$
 
 可能无法充分描述系统状态，导致训练过程出现收敛问题。作者因此将其扩展为：
 
-$$ \boxed{ V\_\theta(o,x,\lambda) } $$
+$$
+\boxed{ V\_\theta(o,x,\lambda) }
+$$
 
 其中：
 
-$$ \lambda=\lambda_i^{lmp} $$
+$$
+\lambda=\lambda_i^{lmp}
+$$
 
 表示 EV \(i\) 接入母线对应的 LMP；若 EV 正在交通网络中行驶，则：
 
-$$ \lambda=\mathrm{None} $$
+$$
+\lambda=\mathrm{None}
+$$
 
 当前时刻的 \(\lambda_i^{lmp}\) 不能直接加入 actor 的 observation，因为它需要等 EV 执行动作后，由 DNO 求解 AC-OPF 才能得到。而在完成环境交互、获得经验之后，LMP 已经可以获得。
 
@@ -1620,7 +1873,9 @@ $$ \lambda=\mathrm{None} $$
 
 共享策略由四个 actor 网络组成：
 
-$$ \pi*s= \{\mu*\psi,\pi*{\phi^d},\pi*{\phi^c},\beta\_\varphi\} $$
+$$
+\pi*s= \{\mu*\psi,\pi*{\phi^d},\pi*{\phi^c},\beta\_\varphi\}
+$$
 
 其中：
 
@@ -1631,15 +1886,21 @@ $$ \pi*s= \{\mu*\psi,\pi*{\phi^d},\pi*{\phi^c},\beta\_\varphi\} $$
 
 训练过程中，各 EV 与环境交互得到 trajectory：
 
-$$ \tau\_{1:I} $$
+$$
+\tau\_{1:I}
+$$
 
 并将所有 EV 的经验发送至中央 EV aggregator。aggregator 根据这些 trajectory 计算 discounted reward-to-go：
 
-$$ \hat R^{(j)}_t = \sum_{h=t}^{T} \gamma^{h-t}r^{(j)}\_h $$
+$$
+\hat R^{(j)}_t = \sum_{h=t}^{T} \gamma^{h-t}r^{(j)}\_h
+$$
 
 并根据：
 
-$$ V\_\theta \left( o^{(j)}\_t, x^{(j)}\_t, \lambda^{(j)}\_t \right) $$
+$$
+V\_\theta \left( o^{(j)}\_t, x^{(j)}\_t, \lambda^{(j)}\_t \right)
+$$
 
 计算 advantage function。
 
@@ -1647,19 +1908,27 @@ $$ V\_\theta \left( o^{(j)}\_t, x^{(j)}\_t, \lambda^{(j)}\_t \right) $$
 
 离散 action policy：
 
-$$ \mathcal L(\phi^d) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \zeta^{d}_{(j),t}\hat A_{(j),t}, \operatorname{clip} \left( \zeta^{d}_{(j),t}, 1-\epsilon, 1+\epsilon \right) \hat A_{(j),t} \right) \tag{46} $$
+$$
+\mathcal L(\phi^d) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \zeta^{d}_{(j),t}\hat A_{(j),t}, \operatorname{clip} \left( \zeta^{d}_{(j),t}, 1-\epsilon, 1+\epsilon \right) \hat A_{(j),t} \right) \tag{46}
+$$
 
 连续 action policy：
 
-$$ \mathcal L(\phi^c) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \zeta^{c}_{(j),t}\hat A_{(j),t}, \operatorname{clip} \left( \zeta^{c}_{(j),t}, 1-\epsilon, 1+\epsilon \right) \hat A_{(j),t} \right) \tag{47} $$
+$$
+\mathcal L(\phi^c) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \zeta^{c}_{(j),t}\hat A_{(j),t}, \operatorname{clip} \left( \zeta^{c}_{(j),t}, 1-\epsilon, 1+\epsilon \right) \hat A_{(j),t} \right) \tag{47}
+$$
 
 Option policy：
 
-$$ \mathcal L(\psi) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \zeta^{x}_{(j),t}\hat A_{(j),t}, \operatorname{clip} \left( \zeta^{x}_{(j),t}, 1-\epsilon, 1+\epsilon \right) \hat A_{(j),t} \right) \tag{48} $$
+$$
+\mathcal L(\psi) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \zeta^{x}_{(j),t}\hat A_{(j),t}, \operatorname{clip} \left( \zeta^{x}_{(j),t}, 1-\epsilon, 1+\epsilon \right) \hat A_{(j),t} \right) \tag{48}
+$$
 
 Termination policy：
 
-$$ \mathcal L(\varphi) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \zeta^{m}_{(j),t}\hat A_{(j),t}, \operatorname{clip} \left( \zeta^{m}_{(j),t}, 1-\epsilon, 1+\epsilon \right) \hat A_{(j),t} \right) \tag{49} $$
+$$
+\mathcal L(\varphi) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \zeta^{m}_{(j),t}\hat A_{(j),t}, \operatorname{clip} \left( \zeta^{m}_{(j),t}, 1-\epsilon, 1+\epsilon \right) \hat A_{(j),t} \right) \tag{49}
+$$
 
 其中 \(J\) 为 batch size，\(\zeta^d,\zeta^c,\zeta^x,\zeta^m\) 分别为离散动作、连续动作、option 和 termination policy 的新旧策略概率比。
 
@@ -1667,13 +1936,27 @@ $$ \mathcal L(\varphi) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min 
 
 共享 critic 通过最小化损失函数进行训练：
 
-$$ \mathcal L(\theta) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \hat A*{(j),t}-\hat R*{(j),t} \right) \tag{50} $$
+$$
+\mathcal L(\theta) = \frac{1}{J\times T} \sum*{j=1}^{J} \sum*{t=1}^{T} \min \left( \hat A*{(j),t}-\hat R*{(j),t} \right) \tag{50}
+$$
 
 #### 网络参数更新
 
 各网络采用梯度上升/下降进行参数更新：
 
-$$ \psi \leftarrow \psi+\alpha*\psi\nabla*\psi\mathcal L(\psi) $$ $$ \phi^d \leftarrow \phi^d+\alpha*{\phi^d} \nabla*{\phi^d}\mathcal L(\phi^d) $$ $$ \phi^c \leftarrow \phi^c+\alpha*{\phi^c} \nabla*{\phi^c}\mathcal L(\phi^c) $$ $$ \varphi \leftarrow \varphi+\alpha*\varphi\nabla*\varphi\mathcal L(\varphi) $$ $$ \theta \leftarrow \theta+\alpha*\theta\nabla*\theta\mathcal L(\theta) \tag{51} $$
+$$
+\psi \leftarrow \psi+\alpha*\psi\nabla*\psi\mathcal L(\psi)
+$$
+
+$$ \phi^d \leftarrow \phi^d+\alpha*{\phi^d} \nabla*{\phi^d}\mathcal L(\phi^d) $$
+
+$$ \phi^c \leftarrow \phi^c+\alpha*{\phi^c} \nabla*{\phi^c}\mathcal L(\phi^c) $$
+
+$$ \varphi \leftarrow \varphi+\alpha*\varphi\nabla*\varphi\mathcal L(\varphi) $$
+
+$$
+\theta \leftarrow \theta+\alpha*\theta\nabla*\theta\mathcal L(\theta) \tag{51}
+$$
 
 其中：
 
@@ -1685,7 +1968,9 @@ $$ \psi \leftarrow \psi+\alpha*\psi\nabla*\psi\mathcal L(\psi) $$ $$ \phi^d \lef
 
 整个 PS 训练过程可以概括为：
 
-$$ \boxed{ \text{所有EV收集经验} \rightarrow \text{Aggregator汇总} \rightarrow \text{计算 }\hat R,\hat A \rightarrow \text{更新共享Actor/Critic} \rightarrow \text{将共享参数发送回各EV} } $$
+$$
+\boxed{ \text{所有EV收集经验} \rightarrow \text{Aggregator汇总} \rightarrow \text{计算 }\hat R,\hat A \rightarrow \text{更新共享Actor/Critic} \rightarrow \text{将共享参数发送回各EV} }
+$$
 
 这样实现 centralized training, decentralized execution：训练阶段集中利用所有 EV 的经验，执行阶段各 EV 使用共享策略结合自己的局部观测独立决策。
 
@@ -1693,11 +1978,15 @@ $$ \boxed{ \text{所有EV收集经验} \rightarrow \text{Aggregator汇总} \righ
 
 训练过程持续 \(E\) 个 episode，直到策略收敛。训练完成后，固定已训练好的网络参数：
 
-$$ \psi,\quad \phi^d,\quad \phi^c,\quad \varphi $$
+$$
+\psi,\quad \phi^d,\quad \phi^c,\quad \varphi
+$$
 
 在测试日期 \(D\) 的每个时间步 \(t\)，每辆 EV 根据当前局部观测 \(o\_{i,t}\) 依次执行：
 
-$$ o*{i,t} \rightarrow x*{i,t} \rightarrow a*{i,t} \rightarrow m*{i,t} $$
+$$
+o*{i,t} \rightarrow x*{i,t} \rightarrow a*{i,t} \rightarrow m*{i,t}
+$$
 
 其中：
 
@@ -1707,7 +1996,9 @@ $$ o*{i,t} \rightarrow x*{i,t} \rightarrow a*{i,t} \rightarrow m*{i,t} $$
 
 随后将这些决策输入电力–交通网络环境，根据状态转移函数得到下一时刻状态：
 
-$$ s*{t+1} = \mathcal T(o*{1:I,t},a\_{1:I,t},\omega_t) $$
+$$
+s*{t+1} = \mathcal T(o*{1:I,t},a\_{1:I,t},\omega_t)
+$$
 
 测试阶段不再更新网络参数，而是直接利用训练好的策略进行 routing 和 scheduling 决策。
 
