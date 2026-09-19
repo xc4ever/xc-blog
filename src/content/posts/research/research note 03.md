@@ -1,6 +1,6 @@
 ---
 title: "关于电力交通融合的探索"
-published: 2026-08-30
+published: 2026-09-19
 description: "学习课题的一个具体方向与目标"
 tags: [科研, V2G, 柔性资源, 电力系统]
 category: 科研
