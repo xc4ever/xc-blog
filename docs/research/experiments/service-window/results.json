@@ -1,0 +1,101 @@
+{
+  "nominal": {
+    "status": 0,
+    "constant_export_kw": 499.999999,
+    "service_energy_kwh": 999.999998,
+    "charge_kwh": 3150.138504,
+    "discharge_kwh": 1000.0,
+    "min_soc": 0.2,
+    "min_terminal_soc": 0.8,
+    "max_constraint_violation": 2.842170943040401e-14,
+    "max_energy_balance_error_kwh": 8.526512829121202e-14,
+    "mip_gap": 0.0
+  },
+  "delayed": {
+    "status": 0,
+    "constant_export_kw": 199.999999,
+    "service_energy_kwh": 399.999998,
+    "charge_kwh": 2485.318557,
+    "discharge_kwh": 399.999998,
+    "min_soc": 0.2,
+    "min_terminal_soc": 0.8,
+    "max_constraint_violation": 9.999999974752427e-07,
+    "max_energy_balance_error_kwh": 5.263157731860701e-07,
+    "mip_gap": 0.0
+  },
+  "delayed_with_nominal_commitment": {
+    "status": 2,
+    "message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
+  },
+  "no_service_energy_check": {
+    "status": 0,
+    "constant_export_kw": 0.0,
+    "service_energy_kwh": 0.0,
+    "charge_kwh": 2042.105263,
+    "discharge_kwh": 0.0,
+    "min_soc": 0.348463,
+    "min_terminal_soc": 0.8,
+    "max_constraint_violation": 0.0,
+    "max_energy_balance_error_kwh": 0.0,
+    "mip_gap": 0.0
+  },
+  "return_delay_sensitivity": [
+    {
+      "delay_minutes": 0.0,
+      "constant_export_kw": 500.0,
+      "available_vehicles_per_service_step": [
+        8,
+        10,
+        10,
+        10
+      ],
+      "connector_power_upper_kw": 500.0
+    },
+    {
+      "delay_minutes": 30.0,
+      "constant_export_kw": 500.0,
+      "available_vehicles_per_service_step": [
+        6,
+        8,
+        10,
+        10
+      ],
+      "connector_power_upper_kw": 500.0
+    },
+    {
+      "delay_minutes": 60.0,
+      "constant_export_kw": 400.0,
+      "available_vehicles_per_service_step": [
+        4,
+        6,
+        8,
+        10
+      ],
+      "connector_power_upper_kw": 400.0
+    },
+    {
+      "delay_minutes": 90.0,
+      "constant_export_kw": 200.0,
+      "available_vehicles_per_service_step": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "connector_power_upper_kw": 200.0
+    }
+  ],
+  "unidirectional_export_check": {
+    "status": 0,
+    "constant_export_kw": 0.0,
+    "service_energy_kwh": 0.0,
+    "charge_kwh": 2042.105263,
+    "discharge_kwh": 0.0,
+    "min_soc": 0.360284,
+    "min_terminal_soc": 0.8,
+    "max_constraint_violation": 0.0,
+    "max_energy_balance_error_kwh": 0.0,
+    "mip_gap": 0.0
+  },
+  "interpretation": "Synthetic fixed-duty deterministic upper bounds with assumed bidirectional hardware. Each case knows its full duties. Not an online algorithm, reserve product or market revenue. No stationary storage, PV, network voltage or task reassignment included."
+}
