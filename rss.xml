@@ -1,4 +1,191 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>XC&apos;s Blog</title><description>No description</description><link>https://xc4ever.cn/</link><language>zh_CN</language><item><title>关于电力交通融合的探索</title><link>https://xc4ever.cn/posts/research/research-note-03/</link><guid isPermaLink="true">https://xc4ever.cn/posts/research/research-note-03/</guid><description>学习课题的一个具体方向与目标</description><pubDate>Sat, 19 Sep 2026 00:00:00 GMT</pubDate><content:encoded>&lt;section class=&quot;markdown-section&quot;&gt;&lt;h1 id=&quot;电力-交通融合研究综述模型算法与关键问题&quot;&gt;电力-交通融合研究综述：模型、算法与关键问题&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-03/#%E7%94%B5%E5%8A%9B-%E4%BA%A4%E9%80%9A%E8%9E%8D%E5%90%88%E7%A0%94%E7%A9%B6%E7%BB%BC%E8%BF%B0%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95%E4%B8%8E%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;论文：&lt;/p&gt;&lt;blockquote&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>XC&apos;s Blog</title><description>No description</description><link>https://xc4ever.cn/</link><language>zh_CN</language><item><title>从场景到第一个模型：工业园区电动重卡研究起步</title><link>https://xc4ever.cn/posts/research/research-note-04/</link><guid isPermaLink="true">https://xc4ever.cn/posts/research/research-note-04/</guid><description>围绕10辆电动重卡，从园区案例和相近论文出发，搭建SOC与调度模型，再用固定储能、滚动优化和简单补救检验问题是否成立。</description><pubDate>Sun, 25 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;前几篇笔记主要在梳理电力与交通融合领域的模型和算法。与老师交流之后，我开始把方向收敛到城市电网与电动重卡，初始对象是一支10辆车的车队。&lt;/p&gt;
+&lt;p&gt;老师给出的研究范围包括SOC建模、电力与交通及物流等系统耦合、Model-based RL、极端事件下的V2G保供，以及正常运行时的协同调度。继续深入，还可以考虑频率、电压、控制器和保护逻辑。&lt;/p&gt;
+&lt;p&gt;这些方向都可以展开，但老师特别强调的一件事是：&lt;strong&gt;先找场景。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;今天的工作就围绕这句话推进：查工程案例、读相近论文、搭建第一个模型，再检查自己的假设是否真的产生了值得研究的问题。这篇笔记记录整个过程，也保留那些没有支持原先设想的结果。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文全部数值实验均使用合成数据，尚未取得实际车队任务和设备记录。它们用于检查模型与研究思路，不代表真实园区效果，也不是已完成的论文复现或现场试验。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;为什么考虑工业园区&quot;&gt;为什么考虑工业园区&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%80%83%E8%99%91%E5%B7%A5%E4%B8%9A%E5%9B%AD%E5%8C%BA&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;我倾向于工业园区，是因为它能把运输与用电放在一个相对明确的空间范围里讨论。&lt;/p&gt;&lt;p&gt;园区里的生产、仓储和物资转运提供了持续的货运需求，充换电又与供电容量、设备位置和作业时间相关。同时，园区并不只有新建和建成两种状态：已有企业继续生产，其他区域可能正在扩建、改造或引入新项目。这些变化可能带来新的运输任务和补能需求，也为后续验证提供条件。&lt;/p&gt;&lt;p&gt;不过，“生产与扩建并存”目前只是有价值的调查入口。还需要确认：两类运输是否由同一批车承担？是否共享道路、装卸设施、充电站或供电容量？新增业务是否真的影响调度？如果没有这些联系，仅仅给场景加上“扩建”二字，并不会自动产生新问题。&lt;/p&gt;&lt;section class=&quot;markdown-section&quot;&gt;&lt;h3 id=&quot;工程资料能支持到哪一步&quot;&gt;工程资料能支持到哪一步&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E5%B7%A5%E7%A8%8B%E8%B5%84%E6%96%99%E8%83%BD%E6%94%AF%E6%8C%81%E5%88%B0%E5%93%AA%E4%B8%80%E6%AD%A5&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;今天找到的几个案例分别支撑了场景的一部分。&lt;/p&gt;&lt;div class=&quot;table-wrapper&quot;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;案例&lt;/th&gt;&lt;th&gt;公开资料提供的依据&lt;/th&gt;&lt;th&gt;仍然缺少的信息&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;赤峰元宝山重卡运输与充电基地&lt;/td&gt;&lt;td&gt;10辆新能源重卡，配套光伏、固定储能和充电设施&lt;/td&gt;&lt;td&gt;逐车任务、站级功率限制，以及车辆是否能反向放电&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;天津南港通用码头&lt;/td&gt;&lt;td&gt;作业设备增长产生补能需求，新增重卡充电设施&lt;/td&gt;&lt;td&gt;车辆排程、共享功率规则及具体接网容量&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;阿克陶江西工业园区&lt;/td&gt;&lt;td&gt;重卡运输、充换电设施和集中调度已经共同运营&lt;/td&gt;&lt;td&gt;可用于建模的原始数据，以及是否存在供电服务需求&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;p&gt;这些案例说明园区物流与能源协同有现实基础，但不能把不同项目的车队、储能和V2G能力拼成一个已经落地的完整系统。尤其是：&lt;strong&gt;场站有储能，不等于重卡动力电池能向外供电；有充电设施，也不等于已经具备双向接口。&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;资料来源：&lt;a href=&quot;https://www.chifeng.gov.cn/zwgk/xxgkzl/fdzdgknr/zdxmjs/zdxmjsxx/202609/t20260924_2824709.html&quot; data-content-link-kind=&quot;external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;赤峰项目报道&lt;/a&gt;、&lt;a href=&quot;https://www.teda.gov.cn/contents/21/108462.html&quot; data-content-link-kind=&quot;external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;南港充电站报道&lt;/a&gt;、&lt;a href=&quot;https://www.xjakt.gov.cn/xjakt/c103525/202412/e3538b770c9d4ebb95807d4812f03a70.shtml&quot; data-content-link-kind=&quot;external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;阿克陶运营报道&lt;/a&gt;。&lt;/p&gt;&lt;/section&gt;&lt;/section&gt;
+&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;读论文时先分清楚车是什么&quot;&gt;读论文时，先分清楚“车”是什么&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E8%AF%BB%E8%AE%BA%E6%96%87%E6%97%B6%E5%85%88%E5%88%86%E6%B8%85%E6%A5%9A%E8%BD%A6%E6%98%AF%E4%BB%80%E4%B9%88&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;今天重点读了丁文斌、李昱彤的《含移动储能车与换电重卡的综合能源系统协同优化策略》。这篇文章研究园区内外的移动储能调度，与当前方向直接相关。&lt;a href=&quot;https://xuebao.sjtu.edu.cn/CN/Y2026/V60/I7/1099&quot; data-content-link-kind=&quot;external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;期刊页面&lt;/a&gt;&lt;/p&gt;&lt;p&gt;全文里一个重要区别是：它调度的MESV主要是&lt;strong&gt;由牵引车运送的储能箱&lt;/strong&gt;。储能箱在能源侧充电，被送到厂外放电点为换电站补能，再被运回。货运重卡更多体现为换电需求，并没有逐辆联合优化货物交付与自身动力电池供电。&lt;/p&gt;&lt;p&gt;这使我把研究对象分成了三类：&lt;/p&gt;&lt;div class=&quot;table-wrapper&quot;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;对象&lt;/th&gt;&lt;th&gt;调度的核心&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;换电站内的电池&lt;/td&gt;&lt;td&gt;充电功率、充电时间和可用库存&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;由牵引车运输的储能箱&lt;/td&gt;&lt;td&gt;储能箱SOC、运输接续和放电任务&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;承担货运的电动重卡&lt;/td&gt;&lt;td&gt;货物任务、载重耗能、车辆位置、接入停留与后续运输&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;p&gt;它们都与电池有关，但不能共用一套没有区别的车辆模型。例如，被拖运储能箱的SOC只计算充放电可以有其解释，货运重卡的动力电池则必须计入行驶消耗。&lt;/p&gt;&lt;p&gt;这篇文章值得借鉴的是从接电与增容受限的需求进入问题，以及同时考虑储能状态、运输占用和供电时序。我也登记了几处公式表达与复现信息的问题。它们提醒我：状态连续不等于功率供给充足，模型里必须明确需求如何得到满足。没有代码时，不能仅凭印刷公式的问题判断作者程序如何实现。&lt;/p&gt;&lt;p&gt;继续追踪参考文献，还找到了两篇直接近邻：&lt;/p&gt;&lt;ul&gt;
+&lt;li&gt;程飞等，2024，《参与电网削峰调节的电动重卡换电站调度策略》，DOI：10.7500/AEPS20230703007。已读到原文检索片段，尚未完成全文核验。&lt;/li&gt;
+&lt;li&gt;刘展鹏等，2025，《面向准线型需求响应的重卡换电站日前-实时优化调度方法》，DOI：10.12204/j.issn.1000-7229.2025.06.009。已核对期刊摘要，涉及SOC分组、换电等待与日前实时优化。&lt;a href=&quot;https://www.cepc.com.cn/CN/abstract/article/1000-7229/7002&quot; data-content-link-kind=&quot;external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;期刊页面&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;结合前面核读的电动卡车基础设施与运行联合设计研究，至少可以确定：载重能耗、接入窗口、需求不确定性和滚动调度都有前人工作。它们需要成为认真建模的基础，不能只靠组合这些词就认定创新点。&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;第一个模型运输会怎样限制供电&quot;&gt;第一个模型：运输会怎样限制供电&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9E%8B%E8%BF%90%E8%BE%93%E4%BC%9A%E6%80%8E%E6%A0%B7%E9%99%90%E5%88%B6%E4%BE%9B%E7%94%B5&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;最初的实验从一个直接的问题开始：车队白天要完成运输，下午还能持续向外提供多少功率？&lt;/p&gt;&lt;p&gt;模型采用逐车、逐时段的能量状态。以电池能量表示，基本收支为：&lt;/p&gt;&lt;span class=&quot;katex-display&quot;&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math display=&quot;block&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;η&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/msub&gt;&lt;msubsup&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mrow&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/msubsup&gt;&lt;mi mathvariant=&quot;normal&quot;&gt;Δ&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;msubsup&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mrow&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;/msubsup&gt;&lt;mi mathvariant=&quot;normal&quot;&gt;Δ&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mrow&gt;&lt;msub&gt;&lt;mi&gt;η&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;/msub&gt;&lt;/mfrac&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mi mathvariant=&quot;normal&quot;&gt;.&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;E_{i,t+1}=E_{i,t}+\eta_c P^c_{i,t}\Delta t
+-\frac{P^d_{i,t}\Delta t}{\eta_d}-e_{i,t}.&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.9694em;vertical-align:-0.2861em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.0576em&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.3117em&quot;&gt;&lt;span style=&quot;top:-2.55em;margin-left:-0.0576em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;mbin mtight&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.2861em&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2778em&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.9694em;vertical-align:-0.2861em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.0576em&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.3117em&quot;&gt;&lt;span style=&quot;top:-2.55em;margin-left:-0.0576em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;t&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.2861em&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mbin&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1.0975em;vertical-align:-0.3831em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.0359em&quot;&gt;η&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.1514em&quot;&gt;&lt;span style=&quot;top:-2.55em;margin-left:-0.0359em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;c&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15em&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.1389em&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.7144em&quot;&gt;&lt;span style=&quot;top:-2.453em;margin-left:-0.1389em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;t&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-3.113em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;c&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.3831em&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;Δ&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mbin&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:2.5143em;vertical-align:-0.8804em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mopen nulldelimiter&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mfrac&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:1.6339em&quot;&gt;&lt;span style=&quot;top:-2.314em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.0359em&quot;&gt;η&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.3361em&quot;&gt;&lt;span style=&quot;top:-2.55em;margin-left:-0.0359em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;d&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15em&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-3.23em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;frac-line&quot; style=&quot;border-bottom-width:0.04em&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-3.7848em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:3em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.1389em&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8491em&quot;&gt;&lt;span style=&quot;top:-2.4413em;margin-left:-0.1389em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;t&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;d&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.3948em&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;Δ&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;t&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8804em&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mclose nulldelimiter&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mbin&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222em&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.7167em;vertical-align:-0.2861em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.3117em&quot;&gt;&lt;span style=&quot;top:-2.55em;margin-left:0em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;t&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.2861em&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;.&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;p&gt;其中，&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;e_{i,t}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.7167em;vertical-align:-0.2861em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.3117em&quot;&gt;&lt;span style=&quot;top:-2.55em;margin-left:0em;margin-right:0.05em&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mpunct mtight&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mord mathnormal mtight&quot;&gt;t&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.2861em&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;包括行驶与辅助用电。车辆只有在可接入、分配到接口且满足功率限制时，才能充放电。模型同时约束SOC上下界、接口数量、站级功率，以及期末恢复电量。&lt;/p&gt;&lt;p&gt;主要合成条件如下：&lt;/p&gt;&lt;div class=&quot;table-wrapper&quot;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;条件&lt;/th&gt;&lt;th&gt;设定&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;车队与时间&lt;/td&gt;&lt;td&gt;10辆车，06:00—22:00，半小时步长&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;电池&lt;/td&gt;&lt;td&gt;每车423 kWh，初始及期末最低SOC均为80%&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;SOC范围&lt;/td&gt;&lt;td&gt;20%—90%&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;固定运输任务&lt;/td&gt;&lt;td&gt;每车三趟，每趟1.5小时、行驶耗电54 kWh&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;补能设施&lt;/td&gt;&lt;td&gt;5个接口，单车充电上限200 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;站级进口余量&lt;/td&gt;&lt;td&gt;600 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;反向供电分支&lt;/td&gt;&lt;td&gt;假设单车可放电100 kW，全站净输出上限500 kW&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;p&gt;423 kWh来自车型公开容量选项，但把它当作可用容量仍是假设。任务、能耗、效率和接口参数也未由实际车队标定，反向能力更没有得到目标车型验证。&lt;/p&gt;&lt;section class=&quot;markdown-section&quot;&gt;&lt;h3 id=&quot;返回延误确实会降低供电能力&quot;&gt;返回延误确实会降低供电能力&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E8%BF%94%E5%9B%9E%E5%BB%B6%E8%AF%AF%E7%A1%AE%E5%AE%9E%E4%BC%9A%E9%99%8D%E4%BD%8E%E4%BE%9B%E7%94%B5%E8%83%BD%E5%8A%9B&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;在14:00—16:00持续净输出的要求下，统一延长第二趟任务的返场时间，得到：&lt;/p&gt;&lt;div class=&quot;table-wrapper&quot;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;返回延误&lt;/th&gt;&lt;th&gt;可持续净输出&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;0分钟&lt;/td&gt;&lt;td&gt;500 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;30分钟&lt;/td&gt;&lt;td&gt;500 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;60分钟&lt;/td&gt;&lt;td&gt;400 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;90分钟&lt;/td&gt;&lt;td&gt;200 kW&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;p&gt;这组结果的机制很直观：服务开始时可接入的车辆变少了。输出上限主要由可用车辆与接口功率决定，尚未体现复杂调度的价值。&lt;/p&gt;&lt;p&gt;因此继续增加了两个对照：固定储能与有限发车调整。&lt;/p&gt;&lt;p&gt;在相同单节点请求下，假设有足够功率、可用电量且没有其他职责的固定储能，就能补足缺口；若允许部分车辆提前出发，也能恢复原来的输出。这里提前出发是在规划前已知延误的安排，不能叫作突发事件发生后的在线补救。&lt;/p&gt;&lt;p&gt;这一步改变了原先的判断：&lt;strong&gt;运输会限制供电，但还不能据此证明一定要调用重卡V2G。&lt;/strong&gt;&lt;/p&gt;&lt;/section&gt;&lt;/section&gt;
+&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;第二个模型先验证信息是否真的按时间到来&quot;&gt;第二个模型：先验证信息是否真的按时间到来&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%A8%A1%E5%9E%8B%E5%85%88%E9%AA%8C%E8%AF%81%E4%BF%A1%E6%81%AF%E6%98%AF%E5%90%A6%E7%9C%9F%E7%9A%84%E6%8C%89%E6%97%B6%E9%97%B4%E5%88%B0%E6%9D%A5&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;为了避免把“提前知道全部未来”的优化误认为在线策略，接着建立了只充电的顺序回放。&lt;/p&gt;&lt;p&gt;这与前一个反向供电实验是不同分支：不要求V2G设备，只检查给定窗口内的车队进口功率限制。&lt;/p&gt;&lt;p&gt;每个半小时时段执行以下过程：读取当前电量和已经公布的信息，优化剩余时间，只执行眼前这一步，再推进到下一时段。已经执行的动作不能被后面的求解改写。&lt;/p&gt;&lt;p&gt;事件设为：车辆5原定14:30返回，14:00获知返回推迟到16:00。另设一条只延误30分钟的事件路径。两条路径在消息公布前提供相同信息，检查得到此前充电动作的最大差异为 &lt;strong&gt;0 kW&lt;/strong&gt;。&lt;/p&gt;&lt;p&gt;这证明程序在这组配对测试中没有提前使用延误消息。它还不是对所有可能输入的形式化保证，但比只比较几组完全预知算例更接近在线调度的含义。&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;扫描功率请求少充的电后来去了哪里&quot;&gt;扫描功率请求：少充的电后来去了哪里&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E6%89%AB%E6%8F%8F%E5%8A%9F%E7%8E%87%E8%AF%B7%E6%B1%82%E5%B0%91%E5%85%85%E7%9A%84%E7%94%B5%E5%90%8E%E6%9D%A5%E5%8E%BB%E4%BA%86%E5%93%AA%E9%87%8C&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;随后扫描了三个请求窗口和四种进口上限，共12组条件。所有可行案例均要求完成相同任务，并恢复相同期末SOC。&lt;/p&gt;&lt;p&gt;下表列出主要结果。“窗口后补能”是窗口结束至22:00的充电量。&lt;/p&gt;&lt;div class=&quot;table-wrapper&quot;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;请求窗口&lt;/th&gt;&lt;th&gt;进口上限&lt;/th&gt;&lt;th&gt;是否可行&lt;/th&gt;&lt;th&gt;窗口后补能&lt;/th&gt;&lt;th&gt;窗口后峰值&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;14:00—16:00&lt;/td&gt;&lt;td&gt;0 kW&lt;/td&gt;&lt;td&gt;可行&lt;/td&gt;&lt;td&gt;530.526 kWh&lt;/td&gt;&lt;td&gt;530.526 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;14:00—16:00&lt;/td&gt;&lt;td&gt;100 kW&lt;/td&gt;&lt;td&gt;可行&lt;/td&gt;&lt;td&gt;330.526 kWh&lt;/td&gt;&lt;td&gt;172.632 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;14:00—16:00&lt;/td&gt;&lt;td&gt;300 kW&lt;/td&gt;&lt;td&gt;可行&lt;/td&gt;&lt;td&gt;316.842 kWh&lt;/td&gt;&lt;td&gt;145.263 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;12:00—18:00&lt;/td&gt;&lt;td&gt;0 kW&lt;/td&gt;&lt;td&gt;可行&lt;/td&gt;&lt;td&gt;909.474 kWh&lt;/td&gt;&lt;td&gt;600 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;12:00—18:00&lt;/td&gt;&lt;td&gt;100 kW&lt;/td&gt;&lt;td&gt;可行&lt;/td&gt;&lt;td&gt;354.211 kWh&lt;/td&gt;&lt;td&gt;446.947 kW&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;06:00—22:00&lt;/td&gt;&lt;td&gt;100 kW&lt;/td&gt;&lt;td&gt;不可行&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;06:00—22:00&lt;/td&gt;&lt;td&gt;300 kW&lt;/td&gt;&lt;td&gt;可行&lt;/td&gt;&lt;td&gt;无窗口后时段&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;p&gt;较轻任务和较高初始SOC，使这组车队具有较大的移时空间。12:00—18:00完全停充也能完成任务，但与同事件下无额外限制的参照相比，窗口少充的约731 kWh全部移到了18:00之后，并产生600 kW峰值。&lt;/p&gt;&lt;p&gt;这不是全天节能，而是补能移时。后续若评价电网服务，必须一起报告服务后的反弹、容量和期末能量，不能只展示窗口内负荷降低。&lt;/p&gt;&lt;p&gt;全天100 kW不可行则有简单的能量解释：16小时最多输入1600 kWh，小于本例恢复期末电量需要的约2042 kWh。算法无法消除这个能量缺口。&lt;/p&gt;&lt;p&gt;这些上限只是合成请求，不是已经准入的市场产品。无额外请求的优化计划也只是实验参照，不能直接作为结算基线。&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;今天最重要的对照简单补救已经够用吗&quot;&gt;今天最重要的对照：简单补救已经够用吗&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E4%BB%8A%E5%A4%A9%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E5%AF%B9%E7%85%A7%E7%AE%80%E5%8D%95%E8%A1%A5%E6%95%91%E5%B7%B2%E7%BB%8F%E5%A4%9F%E7%94%A8%E5%90%97&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;先前比较中，名义固定计划遇到延误后，会取消车辆不在场时无法执行的充电。在部分情形下，这留下了60 kWh期末电量缺口，而滚动优化可以补足。&lt;/p&gt;&lt;p&gt;这个比较还不充分。固定计划如果完全不补救，当然容易表现较差。&lt;/p&gt;&lt;p&gt;于是增加了一条简单规则：先做一次名义计划，执行时记录被取消的充电；车辆返场后，按欠充电量排序，在剩余接口、站级功率和SOC空间内补充充电。此后不在线求解优化问题。&lt;/p&gt;&lt;p&gt;结果是：&lt;strong&gt;此前可行的10组条件，简单补救全部通过。&lt;/strong&gt; 它们均完成固定任务、达到期末SOC，并满足模型中的设备限制。全天充电量也与滚动方法相同。&lt;/p&gt;&lt;p&gt;部分条件下，滚动方法更早完成补能，但当前目标只是合成的“尽早充电”偏好，没有实际电价、峰值计费或下一日任务，还不能把这些时序差异解释成实际经济收益。&lt;/p&gt;&lt;p&gt;所以需要修正前面的判断：那60 kWh缺口说明计划需要补救，并没有证明反复优化的必要性，更没有证明必须采用强化学习。这个简单规则应保留下来，作为后续比较对象。&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;今天完成了什么还没有完成什么&quot;&gt;今天完成了什么，还没有完成什么&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E4%BB%8A%E5%A4%A9%E5%AE%8C%E6%88%90%E4%BA%86%E4%BB%80%E4%B9%88%E8%BF%98%E6%B2%A1%E6%9C%89%E5%AE%8C%E6%88%90%E4%BB%80%E4%B9%88&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;今天实际完成了工程案例整理、相近论文核对、SOC与固定任务建模、反向供电对照、在线回放、功率窗口扫描，以及简单补救比较。&lt;/p&gt;&lt;p&gt;求解与执行中检查了能量守恒、SOC边界、期末电量、车辆可接入时间、接口数量和功率限制，也保留了求解器失败信息。结果并非只写在方案里的设想，程序已经运行。&lt;/p&gt;&lt;p&gt;但目前还没有真实数据标定、现场验证、货运任务改派、换电库存模型或RL训练。半小时调度也不能证明电压、频率、电机启动和保护切换满足要求。&lt;/p&gt;&lt;p&gt;这轮工作最有用的收获，是把一个很宽的方向变成了一组可以检验的问题，并排除了几个过早的结论：有电池不代表能V2G，窗口减负荷不代表节能，固定计划失败不代表复杂算法必需。&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;接下来先复盘一个真实工作日&quot;&gt;接下来先复盘一个真实工作日&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-04/#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E5%85%88%E5%A4%8D%E7%9B%98%E4%B8%80%E4%B8%AA%E7%9C%9F%E5%AE%9E%E5%B7%A5%E4%BD%9C%E6%97%A5&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;下一步最需要的是实际车队信息：车型与充换电方式、任务起讫点、计划和实际时间、载重、SOC与补能记录，以及接口和站级功率限制。&lt;/p&gt;&lt;p&gt;拿到这些信息后，先检查一天的任务与能量收支能否对应，再判断瓶颈来自车辆电量、装卸排队、补能接口、接网容量还是交付期限。如果确有电力调节或临时保供需求，再明确服务对象、时间和已有备用资源。&lt;/p&gt;&lt;p&gt;Model-based RL仍然是后续候选方法。需要先找到持续未知、可以学习且明显影响决策的动态，再检验学习模型是否有用。水网和暂态控制也同样需要由具体运行需求引入。&lt;/p&gt;&lt;p&gt;今天还没有得到最终题目，但已经能更具体地与老师讨论：这10辆车在哪里运行，实际遇到了什么问题，现有规则能解决多少，以及还需要什么数据才能继续判断。&lt;/p&gt;&lt;/section&gt;</content:encoded></item><item><title>关于电力交通融合的探索</title><link>https://xc4ever.cn/posts/research/research-note-03/</link><guid isPermaLink="true">https://xc4ever.cn/posts/research/research-note-03/</guid><description>学习课题的一个具体方向与目标</description><pubDate>Sat, 19 Sep 2026 00:00:00 GMT</pubDate><content:encoded>&lt;section class=&quot;markdown-section&quot;&gt;&lt;h1 id=&quot;电力-交通融合研究综述模型算法与关键问题&quot;&gt;电力-交通融合研究综述：模型、算法与关键问题&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-03/#%E7%94%B5%E5%8A%9B-%E4%BA%A4%E9%80%9A%E8%9E%8D%E5%90%88%E7%A0%94%E7%A9%B6%E7%BB%BC%E8%BF%B0%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95%E4%B8%8E%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;论文：&lt;/p&gt;&lt;blockquote&gt;
 &lt;p&gt;[1]杨蒙,陈玥,徐潇源,等.电力-交通融合研究综述：模型、算法与关键问题[J].电力系统自动化,2025,49(9)&amp;lt;1-16&amp;gt;.&lt;/p&gt;
 &lt;/blockquote&gt;&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;研究背景&quot;&gt;研究背景&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-03/#%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;作为一篇综述论文，文章开头总体指出电力交通二者耦合：从电力系统角度看，受交通网络结构、用户出行需求和道路阻塞状况等影响的EV充电负荷改变了电网潮流分布，给可控资源稀缺的配电网安全稳定运行带来新机遇。从交通系统角度看，充电站的容量和位置、充电速率、充电价格等因素也会影响用户出行路径选择和充电决策，并反过来影响交通流的实际分布。&lt;/p&gt;&lt;p&gt;而对于二者耦合的系统来说，由于主体众多而导致数据隐私与故障传播变得更为复杂，论文此后全面梳理了电力-交通领域当前研究进展。&lt;/p&gt;&lt;/section&gt;&lt;section class=&quot;markdown-section&quot;&gt;&lt;h2 id=&quot;耦合系统架构与模型&quot;&gt;耦合系统架构与模型&lt;a class=&quot;anchor&quot; href=&quot;https://xc4ever.cn/posts/research/research-note-03/#%E8%80%A6%E5%90%88%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A8%A1%E5%9E%8B&quot;&gt;&lt;span class=&quot;anchor-icon&quot; data-pagefind-ignore&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;首先，耦合系统的主体包含：电网运营商、交通管理部门、车主、充电站运营商，考虑不同主体之间的关系建立不同的耦合架构模型，比如：&lt;/p&gt;&lt;ol&gt;
 &lt;li&gt;在电网-EV架构下，电网考虑配电网充电负荷、负荷需求、安全运行，车主考虑出行路径和充电决策&lt;/li&gt;
