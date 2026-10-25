@@ -57,11 +57,11 @@ class Sakura {
 		cxt.restore();
 	}
 
-	update() {
-		this.x = this.fn.x(this.x, this.y);
-		this.y = this.fn.y(this.x, this.y);
-		this.r = this.fn.r(this.r);
-		this.a = this.fn.a(this.a);
+	update(frameScale: number) {
+		this.x += (this.fn.x(this.x, this.y) - this.x) * frameScale;
+		this.y += (this.fn.y(this.x, this.y) - this.y) * frameScale;
+		this.r += (this.fn.r(this.r) - this.r) * frameScale;
+		this.a += (this.fn.a(this.a) - this.a) * frameScale;
 
 		// 如果樱花越界或完全透明，重新调整位置
 		if (
@@ -115,9 +115,9 @@ class SakuraList {
 		this.list.push(sakura);
 	}
 
-	update() {
+	update(frameScale: number) {
 		for (let i = 0, len = this.list.length; i < len; i++) {
-			this.list[i].update();
+			this.list[i].update(frameScale);
 		}
 	}
 
@@ -197,10 +197,19 @@ export class SakuraManager {
 	private isInitializing = false;
 	private resizeTimeout: number | null = null;
 	private boundResizeHandler: () => void;
+	private boundVisibilityHandler: () => void;
 
 	constructor(config: SakuraConfig) {
 		this.config = config;
 		this.boundResizeHandler = this.handleResize.bind(this);
+		this.boundVisibilityHandler = () => {
+			if (document.hidden) {
+				if (this.animationId !== null) cancelAnimationFrame(this.animationId);
+				this.animationId = null;
+			} else if (this.isRunning && this.animationId === null) {
+				this.startAnimation();
+			}
+		};
 	}
 
 	// 初始化樱花特效
@@ -250,6 +259,7 @@ export class SakuraManager {
 		window.addEventListener("resize", this.boundResizeHandler, {
 			passive: true,
 		});
+		document.addEventListener("visibilitychange", this.boundVisibilityHandler);
 	}
 
 	// 创建樱花列表
@@ -299,19 +309,32 @@ export class SakuraManager {
 
 	// 开始动画
 	private startAnimation(): void {
-		if (!this.ctx || !this.canvas || !this.sakuraList) {
+		if (!this.ctx || !this.canvas || !this.sakuraList || document.hidden) {
 			return;
 		}
 
-		const animate = () => {
+		// Limit decorative full-screen redraws; movement remains time-based.
+		const frameInterval = 1000 / 30;
+		let lastFrame: number | null = null;
+		let lastUpdate = 0;
+		const animate = (timestamp: number) => {
 			if (!this.ctx || !this.canvas || !this.sakuraList) {
 				return;
 			}
+			this.animationId = requestAnimationFrame(animate);
+			if (lastFrame === null) {
+				lastFrame = timestamp;
+				lastUpdate = timestamp;
+				return;
+			}
+			const elapsed = timestamp - lastFrame;
+			if (elapsed < frameInterval) return;
+			lastFrame = timestamp - (elapsed % frameInterval);
 
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-			this.sakuraList.update();
+			this.sakuraList.update(Math.min(timestamp - lastUpdate, 100) / (1000 / 60));
+			lastUpdate = timestamp;
 			this.sakuraList.draw(this.ctx);
-			this.animationId = requestAnimationFrame(animate);
 		};
 
 		this.animationId = requestAnimationFrame(animate);
@@ -348,6 +371,7 @@ export class SakuraManager {
 		}
 
 		window.removeEventListener("resize", this.boundResizeHandler);
+		document.removeEventListener("visibilitychange", this.boundVisibilityHandler);
 		this.isRunning = false;
 	}
 
